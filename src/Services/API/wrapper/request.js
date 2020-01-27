@@ -19,8 +19,6 @@ const client = axios.create({
   withCredentials: false,
 });
 
-console.log((JSON.parse(localStorage.getItem('userData')) || {}).token);
-
 /**
  * Request Wrapper with default success/error actions
  */

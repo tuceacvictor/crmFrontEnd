@@ -2,7 +2,7 @@ import request from "./wrapper/request";
 
 function getCustomers(data) {
     return request({
-        url: "api/customers/",
+        url: "api/orders/",
         method: "GET",
         data: data,
         headers: {

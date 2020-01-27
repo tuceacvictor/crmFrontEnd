@@ -8,38 +8,46 @@ class Customers extends Component {
         super(props);
         this.state = {
             data: [],
+            loading: false,
             columns: [
                 {title: 'Имя', field: 'name'},
-                {title: 'Уникальный номер', field: 'id'},
-                {title: 'Номер Телефона', field: 'phone', type: 'numeric'},
+                {title: 'Номер Телефона', field: 'phone'},
+                {title: 'Кол-во Обращений', field: 'orders_count'},
             ]
         }
     }
 
 
     componentDidMount() {
+        this.setState({loading: true});
         CustomerService
             .getCustomers()
             .then(res => {
-                this.setState({data: res})
+                this.setState({data: res, loading: false});
+                console.log(res)
             })
             .catch(err => {
+                this.setState({loading: false});
                 console.log(err)
             })
     }
 
     render() {
-        const {data, columns} = this.state;
+        const {data, columns, selectedRow, loading} = this.state;
         return (
             <div style={{width: '100%'}}>
                 <MaterialTable
                     title="База Клиентов"
+                    isLoading={loading}
                     columns={columns}
                     data={data}
-
+                    onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
                     options={{
                         //selection: true,
-                        grouping: true
+                        grouping: true,
+                        rowStyle: rowData => ({
+                            backgroundColor: (selectedRow && selectedRow.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
+                        })
                     }}
                 />
             </div>

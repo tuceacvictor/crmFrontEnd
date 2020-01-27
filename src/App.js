@@ -55,7 +55,6 @@ class App extends Component {
         const {isOpenDrawer} = this.state;
         const {classes} = this.props;
         const isLogged = localStorage.getItem('userData');
-        console.log(isLogged)
         return (
             <>
                 <div className={isLogged && classes.root}>

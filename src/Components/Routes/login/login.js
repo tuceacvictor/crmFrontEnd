@@ -62,7 +62,7 @@ class Login extends Component {
         this.props.setLogin(false);
     }
 
-    async login (event) {
+    async login(event) {
         event.preventDefault();
         const {formData} = this.state;
         LoginService
@@ -72,9 +72,8 @@ class Login extends Component {
                 localStorage.setItem('userData', JSON.stringify({token}));
                 this.props.setLogin(true);
                 history.push('/');
-                console.log(res)
             }).catch(err => {
-                console.log(err)
+            console.log(err)
         })
     };
 
