@@ -13,7 +13,8 @@ import './App.css';
 import NoComponent from "./Components/Routes/noComponent";
 import Header from "./Components/Utils/header";
 import SideBar from "./Components/Utils/sideBar/sideBar";
-import {CssBaseline} from "@material-ui/core";
+import SideBarMobile from "./Components/Utils/sideBar/sideBarMobile";
+import {CssBaseline, Hidden} from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Customers from "./Components/Routes/customers";
 
@@ -68,8 +69,16 @@ class App extends Component {
                                             <Header isOpenDrawer={isOpenDrawer}
                                                     setLogin={this.setLogin}
                                                     toggleDrawer={this.toggleDrawer}/>
-                                            <SideBar isOpenDrawer={isOpenDrawer}
-                                                     toggleDrawer={this.toggleDrawer}/>
+                                            <Hidden xsDown>
+                                                <SideBar isOpenDrawer={isOpenDrawer}
+                                                         toggleDrawer={this.toggleDrawer}/>
+                                            </Hidden>
+                                            <Hidden smUp>
+                                                <SideBarMobile
+                                                    isOpenDrawer={isOpenDrawer}
+                                                    toggleDrawer={this.toggleDrawer}
+                                                />
+                                            </Hidden>
                                         </>
                                     )
                                 }

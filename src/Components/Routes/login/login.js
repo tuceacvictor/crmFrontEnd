@@ -4,8 +4,6 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
 import history from "../../../Services/history";
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
@@ -65,14 +63,17 @@ class Login extends Component {
     async login(event) {
         event.preventDefault();
         const {formData} = this.state;
+        this.setState({loading: true});
         LoginService
             .login(formData)
             .then(res => {
+                this.setState({loading: false});
                 const {token} = res;
                 localStorage.setItem('userData', JSON.stringify({token}));
                 this.props.setLogin(true);
                 history.push('/');
             }).catch(err => {
+            this.setState({loading: false});
             console.log(err)
         })
     };
@@ -85,6 +86,7 @@ class Login extends Component {
 
     render() {
         const {classes} = this.props;
+        const {loading} = this.state;
         return (
             <div>
                 <Grid container component="main" className={classes.root}>
@@ -124,6 +126,7 @@ class Login extends Component {
                                     autoComplete="current-password"
                                 />
                                 <Button
+                                    disabled={loading}
                                     type="submit"
                                     fullWidth
                                     variant="contained"

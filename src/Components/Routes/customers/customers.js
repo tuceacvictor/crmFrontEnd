@@ -44,6 +44,8 @@ class Customers extends Component {
                     onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
                     options={{
                         //selection: true,
+                        exportButton: true,
+                        exportAllData: true,
                         grouping: true,
                         rowStyle: rowData => ({
                             backgroundColor: (selectedRow && selectedRow.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
