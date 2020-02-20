@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import LoginService from "../../../Services/API/login";
-
+import { withSnackbar } from 'notistack';
 const styles = (theme) => ({
     root: {
         height: '100vh',
@@ -42,14 +42,14 @@ const styles = (theme) => ({
         margin: theme.spacing(3, 0, 2),
     },
 });
-
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             formData: {
                 login: '',
-                password: ''
+                password: '',
+                error: ''
             }
         };
         this.login = this.login.bind(this)
@@ -72,8 +72,10 @@ class Login extends Component {
                 localStorage.setItem('userData', JSON.stringify({token}));
                 this.props.setLogin(true);
                 history.push('/');
+                this.props.enqueueSnackbar('добро пожаловать', {variant: 'success'});
             }).catch(err => {
-            this.setState({loading: false});
+            this.setState({loading: false, error: err.data.message});
+            this.props.enqueueSnackbar(err.data.message, {variant: 'error'});
             console.log(err)
         })
     };
@@ -145,10 +147,9 @@ class Login extends Component {
             </div>
         );
     }
-
 }
 
-export default withStyles(styles)(Login);
+export default withSnackbar(withStyles(styles)(Login));
 
 
 function Copyright() {

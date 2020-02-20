@@ -9,6 +9,7 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import {AccountCircle} from "@material-ui/icons";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import {Link} from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -112,8 +113,11 @@ class Header extends Component {
                                     open={Boolean(anchorEl)}
                                     onClose={this.handleClose}
                                 >
+
                                     <MenuItem onClick={this.handleClose}>Мой профиль</MenuItem>
-                                    <MenuItem onClick={this.handleClose}>Выход</MenuItem>
+                                    <Link to={'/login'}>
+                                        <MenuItem onClick={this.handleClose}>Выход</MenuItem>
+                                    </Link>
                                 </Menu>
                             </div>
                         )}

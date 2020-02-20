@@ -24,7 +24,6 @@ class Customers extends Component {
             .getCustomers()
             .then(res => {
                 this.setState({data: res, loading: false});
-                console.log(res)
             })
             .catch(err => {
                 this.setState({loading: false});
@@ -41,7 +40,7 @@ class Customers extends Component {
                     isLoading={loading}
                     columns={columns}
                     data={data}
-                    onRowClick={((evt, selectedRow) => this.setState({ selectedRow }))}
+                    onRowClick={((evt, selectedRow) => this.setState({selectedRow}))}
                     options={{
                         //selection: true,
                         exportButton: true,

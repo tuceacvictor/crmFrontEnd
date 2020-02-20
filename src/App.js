@@ -7,6 +7,7 @@ import {
 
 import history from "./Services/history";
 import {PrivateRoute} from "./Services/PrivateRoute";
+import {SnackbarProvider} from 'notistack';
 import Login from "./Components/Routes/login";
 import Home from "./Components/Routes/home";
 import './App.css';
@@ -39,7 +40,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isOpenDrawer: false,
+            isOpenDrawer: true,
         };
     }
 
@@ -58,46 +59,48 @@ class App extends Component {
         const isLogged = localStorage.getItem('userData');
         return (
             <>
-                <div className={isLogged && classes.root}>
-                    <CssBaseline/>
-                    <main className={isLogged && classes.content}>
-                        <div className={isLogged && classes.toolbar}>
-                            <Router history={history}>
-                                {
-                                    isLogged && (
-                                        <>
-                                            <Header isOpenDrawer={isOpenDrawer}
-                                                    setLogin={this.setLogin}
-                                                    toggleDrawer={this.toggleDrawer}/>
-                                            <Hidden xsDown>
-                                                <SideBar isOpenDrawer={isOpenDrawer}
-                                                         toggleDrawer={this.toggleDrawer}/>
-                                            </Hidden>
-                                            <Hidden smUp>
-                                                <SideBarMobile
-                                                    isOpenDrawer={isOpenDrawer}
-                                                    toggleDrawer={this.toggleDrawer}
-                                                />
-                                            </Hidden>
-                                        </>
-                                    )
-                                }
-                                <Switch>
-                                    <Route
-                                        path={"/login"}
-                                        render={props => <Login
-                                            {...props}
-                                            setLogin={this.setLogin}
-                                        />}
-                                    />
-                                    <PrivateRoute exact path={"/"} component={Home}/>
-                                    <PrivateRoute exact path={"/customers"} component={Customers}/>
-                                    <Route component={NoComponent}/>
-                                </Switch>
-                            </Router>
-                        </div>
-                    </main>
-                </div>
+                <SnackbarProvider maxSnack={3}>
+                    <div className={isLogged && classes.root}>
+                        <CssBaseline/>
+                        <main className={isLogged && classes.content}>
+                            <div className={isLogged && classes.toolbar}>
+                                <Router history={history}>
+                                    {
+                                        isLogged && (
+                                            <>
+                                                <Header isOpenDrawer={isOpenDrawer}
+                                                        setLogin={this.setLogin}
+                                                        toggleDrawer={this.toggleDrawer}/>
+                                                <Hidden xsDown>
+                                                    <SideBar isOpenDrawer={isOpenDrawer}
+                                                             toggleDrawer={this.toggleDrawer}/>
+                                                </Hidden>
+                                                <Hidden smUp>
+                                                    <SideBarMobile
+                                                        isOpenDrawer={isOpenDrawer}
+                                                        toggleDrawer={this.toggleDrawer}
+                                                    />
+                                                </Hidden>
+                                            </>
+                                        )
+                                    }
+                                    <Switch>
+                                        <Route
+                                            path={"/login"}
+                                            render={props => <Login
+                                                {...props}
+                                                setLogin={this.setLogin}
+                                            />}
+                                        />
+                                        <PrivateRoute exact path={"/"} component={Home}/>
+                                        <PrivateRoute exact path={"/customers"} component={Customers}/>
+                                        <Route component={NoComponent}/>
+                                    </Switch>
+                                </Router>
+                            </div>
+                        </main>
+                    </div>
+                </SnackbarProvider>
             </>
         );
     }
