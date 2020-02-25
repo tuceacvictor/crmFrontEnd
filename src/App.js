@@ -18,6 +18,7 @@ import SideBarMobile from "./Components/Utils/sideBar/sideBarMobile";
 import {CssBaseline, Hidden} from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Customers from "./Components/Routes/customers";
+import Users from "./Components/Routes/admin/users";
 
 const styles = (theme) => ({
     root: {
@@ -53,8 +54,29 @@ class App extends Component {
         this.setState({isLogged: logged})
     };
 
-    render() {
+    navigation = () => {
         const {isOpenDrawer} = this.state;
+        return(
+            <>
+                <Header isOpenDrawer={isOpenDrawer}
+                        setLogin={this.setLogin}
+                        toggleDrawer={this.toggleDrawer}/>
+                <Hidden xsDown>
+                    <SideBar isOpenDrawer={isOpenDrawer}
+                             toggleDrawer={this.toggleDrawer}/>
+                </Hidden>
+                <Hidden smUp>
+                    <SideBarMobile
+                        isOpenDrawer={isOpenDrawer}
+                        toggleDrawer={this.toggleDrawer}
+                    />
+                </Hidden>
+            </>
+        )
+    };
+
+    render() {
+
         const {classes} = this.props;
         const isLogged = localStorage.getItem('userData');
         return (
@@ -65,25 +87,7 @@ class App extends Component {
                         <main className={isLogged && classes.content}>
                             <div className={isLogged && classes.toolbar}>
                                 <Router history={history}>
-                                    {
-                                        isLogged && (
-                                            <>
-                                                <Header isOpenDrawer={isOpenDrawer}
-                                                        setLogin={this.setLogin}
-                                                        toggleDrawer={this.toggleDrawer}/>
-                                                <Hidden xsDown>
-                                                    <SideBar isOpenDrawer={isOpenDrawer}
-                                                             toggleDrawer={this.toggleDrawer}/>
-                                                </Hidden>
-                                                <Hidden smUp>
-                                                    <SideBarMobile
-                                                        isOpenDrawer={isOpenDrawer}
-                                                        toggleDrawer={this.toggleDrawer}
-                                                    />
-                                                </Hidden>
-                                            </>
-                                        )
-                                    }
+                                    {isLogged && this.navigation()}
                                     <Switch>
                                         <Route
                                             path={"/login"}
@@ -94,6 +98,7 @@ class App extends Component {
                                         />
                                         <PrivateRoute exact path={"/"} component={Home}/>
                                         <PrivateRoute exact path={"/customers"} component={Customers}/>
+                                        <PrivateRoute exact path={"/users"} component={Users}/>
                                         <Route component={NoComponent}/>
                                     </Switch>
                                 </Router>
