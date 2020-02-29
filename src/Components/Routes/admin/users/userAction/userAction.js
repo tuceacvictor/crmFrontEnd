@@ -5,6 +5,9 @@ import PropTypes from 'prop-types';
 import DialogContent from "@material-ui/core/DialogContent";
 import FormControl from "@material-ui/core/FormControl";
 import Button from "@material-ui/core/Button";
+import UserService from "../../../../../Services/API/user";
+import {withSnackbar} from "notistack";
+import getSafe from "../../../../../Helpers/getSafeValue";
 
 const styles = (theme) => ({
     root: {
@@ -27,6 +30,30 @@ class UserAction extends Component {
         }
     }
 
+    createUser = () => {
+        const {user} = this.state;
+        const {onClose, enqueueSnackbar} = this.props;
+        UserService
+            .createUser(user)
+            .then(res => {
+                console.log(res);
+                enqueueSnackbar('Пользователь создан', {variant: 'success'});
+                onClose();
+            })
+            .catch(err => {
+                enqueueSnackbar(
+                    getSafe(() => err.data.message, 'Произошла неизвестная ошибка!'),
+                    {variant: 'error'});
+            })
+    };
+
+    onChange = (event) => {
+        const {user} = this.state;
+        const {target: {value, name}} = event;
+        user[name] = value;
+        this.setState({user})
+    };
+
     dialogTitle = () => {
         const {classes, onClose} = this.props;
         return (
@@ -45,7 +72,7 @@ class UserAction extends Component {
         const {onClose} = this.props;
         return (
             <DialogActions>
-                <Button variant={"contained"} color={"primary"}>Создать</Button>
+                <Button variant={"contained"} color={"primary"} onClick={this.createUser}>Создать</Button>
                 <Button variant={"contained"} color={"default"} onClick={onClose}>Отмена</Button>
             </DialogActions>
         )
@@ -53,28 +80,41 @@ class UserAction extends Component {
 
     render() {
         const {open, onClose} = this.props;
+        const {user} = this.state;
         return (
             <Dialog open={open} onClose={onClose}>
                 {this.dialogTitle()}
                 <DialogContent dividers>
                     <FormControl fullWidth margin="normal">
                         <TextField
-                        label={'Логин'}
+                            label={'Логин'}
+                            name={'login'}
+                            value={user.login}
+                            onChange={this.onChange}
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal">
                         <TextField
                             label={'Е-майл'}
+                            name={'email'}
+                            value={user.email}
+                            onChange={this.onChange}
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal">
                         <TextField
                             label={'Роль'}
+                            name={'role'}
+                            value={user.role}
+                            onChange={this.onChange}
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal">
                         <TextField
                             label={'Пароль'}
+                            name={'password'}
+                            value={user.password}
+                            onChange={this.onChange}
                         />
                     </FormControl>
                 </DialogContent>
@@ -91,4 +131,4 @@ UserAction.propTypes = {
 
 };
 
-export default withStyles(styles)(UserAction)
+export default withSnackbar(withStyles(styles)(UserAction))

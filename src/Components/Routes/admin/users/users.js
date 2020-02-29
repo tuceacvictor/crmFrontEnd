@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import MaterialTable from "material-table";
 import UserAction from "./userAction/userAction";
+import UserService from "../../../../Services/API/user";
+import {withSnackbar} from "notistack";
+import getSafe from "../../../../Helpers/getSafeValue";
 
 class Users extends Component {
     constructor(props) {
@@ -22,6 +25,20 @@ class Users extends Component {
             user: user
         }))
     };
+
+    componentDidMount() {
+        const {enqueueSnackbar} = this.props;
+        UserService
+            .getUsers()
+            .then(res => {
+                this.setState({data: res})
+            })
+            .catch(err => {
+                enqueueSnackbar(
+                    getSafe(() => err.data.message, 'Произошла неизвестная ошибка!'),
+                    {variant: 'error'});
+            })
+    }
 
     render() {
         const {columns, data, openAction} = this.state;
@@ -46,4 +63,4 @@ class Users extends Component {
     }
 }
 
-export default Users;
+export default withSnackbar(Users);
