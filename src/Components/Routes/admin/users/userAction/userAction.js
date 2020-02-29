@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import {Dialog, DialogTitle, Typography, IconButton, withStyles, TextField} from "@material-ui/core";
+import {Dialog, DialogTitle, Typography, IconButton, withStyles, TextField, DialogActions} from "@material-ui/core";
 import CloseIcon from '@material-ui/icons/Close';
 import PropTypes from 'prop-types';
 import DialogContent from "@material-ui/core/DialogContent";
+import FormControl from "@material-ui/core/FormControl";
+import Button from "@material-ui/core/Button";
 
 const styles = (theme) => ({
     root: {
@@ -26,10 +28,10 @@ class UserAction extends Component {
     }
 
     dialogTitle = () => {
-        const {classes, children, onClose} = this.props;
+        const {classes, onClose} = this.props;
         return (
             <DialogTitle disableTypography className={classes.root}>
-                <Typography variant="h6">Создать Пользователя</Typography>
+                <Typography variant="h6">Новый Пользователь</Typography>
                 {onClose ? (
                     <IconButton aria-label="close" className={classes.closeButton} onClick={onClose}>
                         <CloseIcon/>
@@ -39,16 +41,44 @@ class UserAction extends Component {
         )
     };
 
+    dialogActions = () => {
+        const {onClose} = this.props;
+        return (
+            <DialogActions>
+                <Button variant={"contained"} color={"primary"}>Создать</Button>
+                <Button variant={"contained"} color={"default"} onClick={onClose}>Отмена</Button>
+            </DialogActions>
+        )
+    };
+
     render() {
-        const {open, onClose, user} = this.props;
+        const {open, onClose} = this.props;
         return (
             <Dialog open={open} onClose={onClose}>
                 {this.dialogTitle()}
                 <DialogContent dividers>
-                    <TextField />
-                    <TextField />
-                    <TextField />
+                    <FormControl fullWidth margin="normal">
+                        <TextField
+                        label={'Логин'}
+                        />
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <TextField
+                            label={'Е-майл'}
+                        />
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <TextField
+                            label={'Роль'}
+                        />
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <TextField
+                            label={'Пароль'}
+                        />
+                    </FormControl>
                 </DialogContent>
+                {this.dialogActions()}
             </Dialog>
         );
     }

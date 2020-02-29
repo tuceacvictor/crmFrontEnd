@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import AppHoc from '../../../Services/HocHelpers/AppHoc';
 import withStyles from "@material-ui/core/styles/withStyles";
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -73,7 +74,7 @@ class SideBarMobile extends Component {
     }
 }
 
-export default withStyles(styles)(SideBarMobile);
+export default AppHoc(withStyles(styles)(SideBarMobile));
 
 
 function ListItemLink(props) {

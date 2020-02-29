@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import LoginService from "../../../Services/API/login";
 import { withSnackbar } from 'notistack';
+import getSafe from "../../../Helpers/getSafeValue";
 const styles = (theme) => ({
     root: {
         height: '100vh',
@@ -74,8 +75,10 @@ class Login extends Component {
                 history.push('/');
                 this.props.enqueueSnackbar('добро пожаловать', {variant: 'success'});
             }).catch(err => {
-            this.setState({loading: false, error: err.data.message});
-            this.props.enqueueSnackbar(err.data.message, {variant: 'error'});
+            this.setState({loading: false});
+            this.props.enqueueSnackbar(
+                getSafe(() => err.data.message, 'Произошла неизвестная ошибка!'),
+                {variant: 'error'});
             console.log(err)
         })
     };

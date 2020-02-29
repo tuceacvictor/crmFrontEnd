@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import AppHoc from '../../../Services/HocHelpers/AppHoc';
 import clsx from 'clsx';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,6 +11,8 @@ import {AccountCircle} from "@material-ui/icons";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import {Link} from "react-router-dom";
+import UserSettings from "../userSettings/userSettings";
+import ChangePassword from "../changePassword/changePassword";
 
 const drawerWidth = 240;
 
@@ -49,6 +52,8 @@ class Header extends Component {
         super(props);
         this.state = {
             isOpenMenu: false,
+            openSettings: false,
+            openChangePassword: false,
         }
     }
 
@@ -60,9 +65,31 @@ class Header extends Component {
         this.setState({anchorEl: null})
     };
 
+    openProfileSettings = () => {
+        this.setState({anchorEl: null, openSettings: true})
+    };
+
+    closeProfileSettings = () => {
+        this.setState({openSettings: false})
+    };
+
+    toggleChangePassword = () => {
+        this.setState(state => ({
+            openChangePassword: !state.openChangePassword
+        }))
+    };
+
     render() {
-        const {classes, toggleDrawer, isOpenDrawer} = this.props;
-        const {anchorEl} = this.state;
+        const {
+            classes,
+            toggleDrawer,
+            isOpenDrawer,
+            changePrimaryColor,
+            changeSecondaryColor,
+            changeThemeType,
+            themeValues,
+        } = this.props;
+        const {anchorEl, openSettings, openChangePassword} = this.state;
         const auth = localStorage.getItem('userData');
         return (
             <div>
@@ -114,7 +141,8 @@ class Header extends Component {
                                     onClose={this.handleClose}
                                 >
 
-                                    <MenuItem onClick={this.handleClose}>Мой профиль</MenuItem>
+                                    <MenuItem onClick={this.openProfileSettings}>Мой профиль</MenuItem>
+                                    <MenuItem onClick={this.toggleChangePassword}>Сменить пароль</MenuItem>
                                     <Link to={'/login'}>
                                         <MenuItem onClick={this.handleClose}>Выход</MenuItem>
                                     </Link>
@@ -123,9 +151,19 @@ class Header extends Component {
                         )}
                     </Toolbar>
                 </AppBar>
+                <UserSettings open={openSettings}
+                              themeValues={themeValues}
+                              changePrimaryColor={changePrimaryColor}
+                              changeSecondaryColor={changeSecondaryColor}
+                              changeThemeType={changeThemeType}
+                              onClose={this.closeProfileSettings}/>
+                <ChangePassword
+                    open={openChangePassword}
+                    onClose={this.toggleChangePassword}
+                />
             </div>
         );
     }
 }
 
-export default withStyles(styles)(Header);
+export default AppHoc(withStyles(styles)(Header));

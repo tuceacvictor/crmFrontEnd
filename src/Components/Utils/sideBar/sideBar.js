@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import AppHoc from '../../../Services/HocHelpers/AppHoc';
 import withStyles from "@material-ui/core/styles/withStyles";
 import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
@@ -147,7 +148,7 @@ class SideBar extends Component {
     }
 }
 
-export default withStyles(styles)(SideBar);
+export default AppHoc(withStyles(styles)(SideBar));
 
 
 function ListItemLink(props) {

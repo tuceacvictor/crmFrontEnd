@@ -1,6 +1,6 @@
 import React from "react";
 
-const NoComponent = (props) => {
+const NoComponent = () => {
     return(
         <div>
             No Component
