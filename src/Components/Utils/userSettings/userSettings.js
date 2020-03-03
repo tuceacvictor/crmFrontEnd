@@ -186,9 +186,14 @@ class UserSettings extends Component {
 
 
     profileSetup = () => {
+        const {currentUser} = this.props;
         return (
             <div>
-
+                <p>Ваш логин: <b>{currentUser.user.login}</b></p>
+                <p>Дата регистрации: <b>{currentUser.user.registered}</b></p>
+                <p>Почта регистрации: <b>{currentUser.user.email}</b></p>
+                <p>Роль: <b>{currentUser.user.role}</b></p>
+                <p>Последнее обновление профиля: <b>{currentUser.user.lastUpdated}</b></p>
             </div>
         )
     };

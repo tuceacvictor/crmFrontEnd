@@ -46,9 +46,9 @@ class Customers extends Component {
                         exportButton: true,
                         exportAllData: true,
                         // grouping: true,
-                        rowStyle: rowData => ({
-                            backgroundColor: (selectedRow && selectedRow.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
-                        })
+                        // rowStyle: rowData => ({
+                        //     backgroundColor: (selectedRow && selectedRow.tableData.id === rowData.tableData.id) ? '#EEE' : '#FFF'
+                        // })
                     }}
                 />
             </div>

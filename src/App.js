@@ -56,7 +56,7 @@ class App extends Component {
             primaryColor: settings.theme.primaryColor.name,
             secondaryColor: settings.theme.secondaryColor.name,
             type: settings.theme.type,
-            currentUser: {}
+            currentUser: JSON.parse(localStorage.getItem('userData'))
         };
     }
 
@@ -162,7 +162,6 @@ class App extends Component {
     };
 
     render() {
-
         const {classes} = this.props;
         const isLogged = localStorage.getItem('userData');
         return (

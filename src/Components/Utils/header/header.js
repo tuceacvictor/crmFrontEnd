@@ -13,6 +13,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {Link} from "react-router-dom";
 import UserSettings from "../userSettings/userSettings";
 import ChangePassword from "../changePassword/changePassword";
+import {Tooltip} from "@material-ui/core";
 
 const drawerWidth = 240;
 
@@ -88,6 +89,7 @@ class Header extends Component {
             changeSecondaryColor,
             changeThemeType,
             themeValues,
+            currentUser
         } = this.props;
         const {anchorEl, openSettings, openChangePassword} = this.state;
         const auth = localStorage.getItem('userData');
@@ -116,6 +118,7 @@ class Header extends Component {
                         </Typography>
                         {auth && (
                             <div>
+                                <Tooltip title={currentUser.user.login}>
                                 <IconButton
                                     aria-label="account of current user"
                                     aria-controls="menu-appbar"
@@ -125,6 +128,7 @@ class Header extends Component {
                                 >
                                     <AccountCircle/>
                                 </IconButton>
+                                </Tooltip>
                                 <Menu
                                     id="menu-appbar"
                                     anchorEl={anchorEl}

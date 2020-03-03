@@ -69,8 +69,8 @@ class Login extends Component {
             .login(formData)
             .then(res => {
                 this.setState({loading: false});
-                const {token} = res;
-                localStorage.setItem('userData', JSON.stringify({token}));
+                const {token, user, theme} = res;
+                localStorage.setItem('userData', JSON.stringify({token, user, theme}));
                 this.props.setLogin(true);
                 history.push('/');
                 this.props.enqueueSnackbar('добро пожаловать', {variant: 'success'});

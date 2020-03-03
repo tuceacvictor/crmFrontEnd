@@ -32,13 +32,15 @@ class UserAction extends Component {
 
     createUser = () => {
         const {user} = this.state;
-        const {onClose, enqueueSnackbar} = this.props;
+        const {onClose, getUsers, enqueueSnackbar} = this.props;
         UserService
             .createUser(user)
             .then(res => {
                 console.log(res);
                 enqueueSnackbar('Пользователь создан', {variant: 'success'});
                 onClose();
+                getUsers();
+
             })
             .catch(err => {
                 enqueueSnackbar(
@@ -128,7 +130,6 @@ UserAction.propTypes = {
     user: PropTypes.object,
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired
-
 };
 
 export default withSnackbar(withStyles(styles)(UserAction))

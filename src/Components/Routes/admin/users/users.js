@@ -26,38 +26,46 @@ class Users extends Component {
         }))
     };
 
-    componentDidMount() {
+    getUsers = () => {
         const {enqueueSnackbar} = this.props;
+        this.setState({loading: true});
         UserService
             .getUsers()
             .then(res => {
-                this.setState({data: res})
+                this.setState({data: res, loading: false})
             })
             .catch(err => {
+                this.setState({loading: false});
                 enqueueSnackbar(
                     getSafe(() => err.data.message, 'Произошла неизвестная ошибка!'),
                     {variant: 'error'});
             })
+    };
+
+    componentDidMount() {
+        this.getUsers();
     }
 
     render() {
-        const {columns, data, openAction} = this.state;
+        const {columns, data, openAction, loading} = this.state;
         return (
             <div style={{width: '100%'}}>
                 <MaterialTable
+                    isLoading={loading}
                     title={'Пользователи'}
                     columns={columns}
                     data={data}
+                    onRowClick={(e, row) => console.log(row)}
                     actions={[
                         {
                             icon: 'add',
                             tooltip: 'Создать Пользователя',
                             isFreeAction: true,
-                            onClick: () => this.onClickAction()
+                            onClick: () => this.onClickAction(),
                         }
                     ]}
                 />
-                <UserAction open={openAction} onClose={this.onClickAction} user={{}}/>
+                <UserAction open={openAction} getUsers={this.getUsers} onClose={this.onClickAction} user={{}}/>
             </div>
         );
     }

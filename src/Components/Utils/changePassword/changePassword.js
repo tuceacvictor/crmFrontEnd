@@ -55,12 +55,14 @@ class ChangePassword extends Component {
 
     changePassword = () => {
         const {password, newPassword} = this.state.changePassword;
+        const {currentUser: {user: {id}}} = this.props;
         this.setState({loading: true});
         UserService
-            .changePassword({password, newPassword})
+            .changePassword({id, password, newPassword})
             .then(() => {
                 this.setState({loading: false});
                 this.props.enqueueSnackbar('Пароль изменен', {variant: 'success'});
+                this.props.onClose();
             })
             .catch(err => {
                 this.setState({loading: false});
