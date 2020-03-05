@@ -56,7 +56,7 @@ class App extends Component {
             primaryColor: settings.theme.primaryColor.name,
             secondaryColor: settings.theme.secondaryColor.name,
             type: settings.theme.type,
-            currentUser: JSON.parse(localStorage.getItem('userData'))
+            currentUser: {user: {}, theme: {}, token: ""}
         };
     }
 
@@ -76,8 +76,16 @@ class App extends Component {
         this.setState({isOpenDrawer: !isOpenDrawer})
     };
 
-    setLogin = (logged) => {
-        this.setState({isLogged: logged})
+    setLogin = (logged, token, user, {primaryColor, secondaryColor, type} = {}) => {
+        this.setState({
+            isLogged: logged,
+            currentUser: logged ? {token, user} : {},
+        });
+        if(logged){
+            let nightMode = type ? 'dark' : 'light';
+            this.updateTheme({primaryColor, secondaryColor, type: nightMode})
+
+        }
     };
 
     navigation = () => {
@@ -96,7 +104,6 @@ class App extends Component {
 
     updateTheme = (palette, removeLocalStorage, callback) => {
         const {primaryColor, secondaryColor, type} = this.state;
-
         if (!palette.primaryColor) {
             palette.primaryColor = primaryColor;
         }
@@ -148,7 +155,6 @@ class App extends Component {
 
     changeSecondaryColor = (event) => {
         const secondaryColor = event.target.value;
-
         this.updateTheme({
             secondaryColor
         });

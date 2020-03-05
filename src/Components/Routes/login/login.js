@@ -71,7 +71,7 @@ class Login extends Component {
                 this.setState({loading: false});
                 const {token, user, theme} = res;
                 localStorage.setItem('userData', JSON.stringify({token, user, theme}));
-                this.props.setLogin(true);
+                this.props.setLogin(true, token, user, theme);
                 history.push('/');
                 this.props.enqueueSnackbar('добро пожаловать', {variant: 'success'});
             }).catch(err => {

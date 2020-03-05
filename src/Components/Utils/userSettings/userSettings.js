@@ -57,10 +57,11 @@ class UserSettings extends Component {
     }
 
     updateProfile = () => {
-        const {primaryColor, secondaryColor, type} = this.props.themeValues;
+        const {themeValues: {primaryColor, secondaryColor, type}, currentUser: {user: {id}}} = this.props;
+        let nightLight = type === 'dark';
         this.setState({loading: true});
         UserService
-            .updateProfile({primaryColor, secondaryColor, type})
+            .updateProfile({id, primaryColor, secondaryColor, nightLight})
             .then(() => {
                 this.setState({loading: false});
                 this.props.enqueueSnackbar('Профиль обновлен', {variant: 'success'});

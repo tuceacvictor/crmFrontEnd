@@ -2,7 +2,7 @@ import request from "./wrapper/request";
 
 function updateProfile (data) {
     return request({
-        url: "api/users/updateProfile",
+        url: "api/users/changeTheme",
         method: "POST",
         data: data,
         headers: {
