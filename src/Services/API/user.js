@@ -33,7 +33,6 @@ function getUsers() {
     })
 }
 
-
 function createUser(data) {
     return request({
         url: "api/users",
@@ -45,11 +44,37 @@ function createUser(data) {
     })
 }
 
+
+function updateUser(data) {
+    return request({
+        url: "api/users/update",
+        method: "PUT",
+        data: data,
+        headers: {
+            'Authorization': `Bearer ${(JSON.parse(localStorage.getItem('userData')) || {}).token}`
+        }
+    })
+}
+
+
+function deleteUser(id) {
+    return request({
+        url: "api/users/delete",
+        method: "DELETE",
+        data: {id},
+        headers: {
+            'Authorization': `Bearer ${(JSON.parse(localStorage.getItem('userData')) || {}).token}`
+        }
+    })
+}
+
 const UserService = {
     updateProfile,
     changePassword,
     getUsers,
-    createUser
+    createUser,
+    updateUser,
+    deleteUser
 };
 
 export default UserService;
