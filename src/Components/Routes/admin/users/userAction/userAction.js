@@ -9,13 +9,7 @@ import UserService from "../../../../../Services/API/user";
 import {withSnackbar} from "notistack";
 import getSafe from "../../../../../Helpers/getSafeValue";
 import {Formik, Form, Field} from 'formik';
-import {
-    fieldToTextField,
-    TextField,
-    TextFieldProps,
-    Select,
-    Switch,
-} from 'formik-material-ui';
+import {TextField} from 'formik-material-ui';
 import MenuItem from "@material-ui/core/MenuItem";
 
 const styles = (theme) => ({
@@ -169,7 +163,7 @@ class UserAction extends Component {
                                 <Field
                                     component={TextField}
                                     name={"login"}
-                                    label={"Login"}
+                                    label={"Логин"}
                                     type={"string"}
                                 />
                             </FormControl>
@@ -178,7 +172,7 @@ class UserAction extends Component {
                                 <Field
                                     component={TextField}
                                     name={"email"}
-                                    label={"Email"}
+                                    label={"E-майл"}
                                     type={"email"}
                                 />
                             </FormControl>
@@ -189,7 +183,7 @@ class UserAction extends Component {
                                         <Field
                                             component={TextField}
                                             name={"password"}
-                                            label={"Password"}
+                                            label={"Пароль"}
                                             type={"password"}
                                         />
                                     </FormControl>
@@ -200,7 +194,7 @@ class UserAction extends Component {
                                 <Field
                                     component={TextField}
                                     name={"role"}
-                                    label={"Role"}
+                                    label={"Роль"}
                                     type={"string"}
                                     select
                                 >

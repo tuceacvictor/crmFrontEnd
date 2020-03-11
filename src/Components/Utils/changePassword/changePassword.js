@@ -6,7 +6,6 @@ import {
     DialogContent,
     DialogTitle,
     IconButton,
-    TextField,
     Typography,
     withStyles
 } from "@material-ui/core";
@@ -16,6 +15,8 @@ import FormControl from "@material-ui/core/FormControl";
 import UserService from "../../../Services/API/user";
 import getSafe from "../../../Helpers/getSafeValue";
 import {withSnackbar} from "notistack";
+import {Formik, Form, Field} from 'formik';
+import {TextField} from 'formik-material-ui';
 
 const styles = (theme) => ({
     root: {
@@ -36,12 +37,8 @@ const styles = (theme) => ({
 class ChangePassword extends Component {
     constructor(props) {
         super(props);
+        this.form = React.createRef();
         this.state = {
-            changePassword: {
-                password: '',
-                newPassword: '',
-                passwordRepeat: '',
-            },
             loading: false,
         }
     }
@@ -53,8 +50,8 @@ class ChangePassword extends Component {
         this.setState({changePassword})
     };
 
-    changePassword = () => {
-        const {password, newPassword} = this.state.changePassword;
+    changePassword = (values) => {
+        const {password, newPassword} = values;
         const {currentUser: {user: {id}}} = this.props;
         this.setState({loading: true});
         UserService
@@ -91,7 +88,7 @@ class ChangePassword extends Component {
         const {loading} = this.state;
         return (
             <DialogActions>
-                <Button disabled={loading} onClick={this.changePassword} variant={"contained"}
+                <Button disabled={loading} onClick={() => this.form.current.handleSubmit()} variant={"contained"}
                         color={"primary"}>Применить</Button>
                 <Button variant={"contained"} color={"default"} onClick={onClose}>Отмена</Button>
             </DialogActions>
@@ -99,48 +96,72 @@ class ChangePassword extends Component {
     };
 
     dialogContent = () => {
-        const {changePassword} = this.state;
         return (
-            <div>
-                <FormControl fullWidth margin="normal">
-                    <TextField
-                        autoFocus
-                        required
-                        type={'password'}
-                        onChange={this.onChangePassword}
-                        name={'password'}
-                        value={changePassword.password}
-                        label={'Старый пароль'}
-                    />
-                </FormControl>
-                <FormControl fullWidth margin="normal">
-                    <TextField
-                        type={'password'}
-                        required
-                        onChange={this.onChangePassword}
-                        name={'newPassword'}
-                        value={changePassword.newPassword}
-                        label={'Новый пароль'}
-                    />
-                </FormControl>
-                <FormControl fullWidth margin="normal">
-                    <TextField
-                        type={'password'}
-                        required
-                        onChange={this.onChangePassword}
-                        name={'passwordRepeat'}
-                        value={changePassword.passwordRepeat}
-                        label={'Повторите новый пароль'}
-                    />
-                </FormControl>
-            </div>
+            <Formik
+                innerRef={this.form}
+                initialValues={{
+                    password: '',
+                    newPassword: '',
+                    passwordRepeat: ''
+                }}
+                onSubmit={(values, actions) => {
+                    this.changePassword(values);
+                    actions.setSubmitting(false)
+                }}
+                validate={values => {
+                    const errors = {};
+                    if (!values.password) {
+                        errors.password = 'Обязательное поле'
+                    }
+                    if (!values.passwordRepeat) {
+                        errors.passwordRepeat = 'Обязательное поле'
+                    }
+                    if (!values.newPassword) {
+                        errors.newPassword = 'Обязательное поле'
+                    }
+                    if (values.newPassword !== values.passwordRepeat) {
+                        errors.newPassword = 'Пароли не совпадают';
+                        errors.passwordRepeat = 'Пароли не совпадают';
+                    }
+                    return errors;
+                }}
+            >
+                <Form>
+                    <FormControl fullWidth margin="normal">
+                        <Field
+                            component={TextField}
+                            name={"password"}
+                            label={"Старый пароль"}
+                            type={"password"}
+                        />
+                    </FormControl>
+                    <br/>
+                    <FormControl fullWidth margin="normal">
+                        <Field
+                            component={TextField}
+                            name={"newPassword"}
+                            label={"Новый пароль"}
+                            type={"password"}
+                        />
+                    </FormControl>
+                    <br/>
+                    <FormControl fullWidth margin="normal">
+                        <Field
+                            component={TextField}
+                            name={"passwordRepeat"}
+                            label={"Повторите новый пароль"}
+                            type={"password"}
+                        />
+                    </FormControl>
+                </Form>
+            </Formik>
         )
     };
 
     render() {
         const {classes, open, onClose} = this.props;
         return (
-            <Dialog open={open} onClose={onClose} maxWidth={"md"} fullWidth>
+            <Dialog open={open} onClose={onClose} maxWidth={"sm"} fullWidth>
                 {this.dialogTitle()}
                 <DialogContent dividers classes={{dividers: classes.dialogDividers}}>
                     {this.dialogContent()}
