@@ -32,7 +32,7 @@ class Customers extends Component {
     }
 
     render() {
-        const {data, columns, selectedRow, loading} = this.state;
+        const {data, columns, loading} = this.state;
         return (
             <div style={{width: '100%'}}>
                 <MaterialTable
