@@ -19,10 +19,10 @@ class Users extends Component {
         }
     }
 
-    onClickAction = (user) => {
+    onClickAction = (userId) => {
         this.setState(state => ({
             openAction: !state.openAction,
-            user: user
+            userId: userId
         }))
     };
 
@@ -47,7 +47,7 @@ class Users extends Component {
     }
 
     render() {
-        const {columns, data, openAction, loading, user} = this.state;
+        const {columns, data, openAction, loading, userId} = this.state;
         return (
             <div style={{width: '100%'}}>
                 <MaterialTable
@@ -55,7 +55,7 @@ class Users extends Component {
                     title={'Пользователи'}
                     columns={columns}
                     data={data}
-                    onRowClick={(e, row) => this.onClickAction(row)}
+                    onRowClick={(e, row) => this.onClickAction(row.id)}
                     actions={[
                         {
                             icon: 'add',
@@ -65,11 +65,15 @@ class Users extends Component {
                         }
                     ]}
                 />
-                <UserAction open={openAction}
-                            getUsers={this.getUsers}
-                            onClose={this.onClickAction}
-                            userData={user}
-                />
+                {
+                    openAction && (
+                        <UserAction open={openAction}
+                                    getUsers={this.getUsers}
+                                    onClose={this.onClickAction}
+                                    userId={userId}
+                        />
+                    )
+                }
             </div>
         );
     }

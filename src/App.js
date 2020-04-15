@@ -22,6 +22,7 @@ import Users from "./Components/Routes/admin/users";
 import colors from './Helpers/colors';
 import settings from './Helpers/settings';
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core/styles";
+import Offices from "./Components/Routes/admin/offices/offices";
 
 const styles = (theme) => ({
     root: {
@@ -207,6 +208,7 @@ class App extends Component {
                                             <PrivateRoute exact path={"/"} component={Home}/>
                                             <PrivateRoute exact path={"/customers"} component={Customers}/>
                                             <PrivateRoute exact path={"/users"} component={Users}/>
+                                            <PrivateRoute exact path={"/offices"} component={Offices}/>
                                             <Route component={NoComponent}/>
                                         </Switch>
                                     </Router>

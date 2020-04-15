@@ -67,6 +67,7 @@ class SideBar extends Component {
                 {
                     label: "Админ", url: "", icon: "build", sub: [
                         {label: "Пользователи", url: "/users", icon: "supervised_user_circle"},
+                        {label: "Офисы", url: "/offices", icon: "supervised_user_circle"},
                     ]
                 },
                 {label: "База Клиентов", url: "/customers", icon: "accessibility"}

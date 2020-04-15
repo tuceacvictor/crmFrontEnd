@@ -1,30 +1,8 @@
 import request from "./wrapper/request";
 
-function updateProfile (data) {
+function getOffices() {
     return request({
-        url: "api/users/changeTheme",
-        method: "POST",
-        data: data,
-        headers: {
-            'Authorization': `Bearer ${(JSON.parse(localStorage.getItem('userData')) || {}).token}`
-        }
-    });
-}
-
-function changePassword (data) {
-    return request({
-        url: "api/users/changePassword",
-        method: "POST",
-        data: data,
-        headers: {
-            'Authorization': `Bearer ${(JSON.parse(localStorage.getItem('userData')) || {}).token}`
-        }
-    });
-}
-
-function getUsers() {
-    return request({
-        url: "api/users",
+        url: "api/office",
         method: "GET",
         data: {},
         headers: {
@@ -33,9 +11,9 @@ function getUsers() {
     })
 }
 
-function createUser(data) {
+function createOffice(data) {
     return request({
-        url: "api/users",
+        url: "api/office/create",
         method: "POST",
         data: data,
         headers: {
@@ -44,9 +22,9 @@ function createUser(data) {
     })
 }
 
-function updateUser(data) {
+function updateOffice(data) {
     return request({
-        url: "api/users/update",
+        url: "api/office/update",
         method: "PUT",
         data: data,
         headers: {
@@ -55,9 +33,9 @@ function updateUser(data) {
     })
 }
 
-function deleteUser(id) {
+function deleteOffice(id) {
     return request({
-        url: "api/users/delete",
+        url: "api/office/",
         method: "DELETE",
         data: {id},
         headers: {
@@ -66,9 +44,9 @@ function deleteUser(id) {
     })
 }
 
-function readUser(id) {
+function readOffice(id) {
     return request({
-        url: "api/users/read",
+        url: "api/office/read",
         method: "POST",
         data: {id},
         headers: {
@@ -77,14 +55,12 @@ function readUser(id) {
     })
 }
 
-const UserService = {
-    updateProfile,
-    changePassword,
-    getUsers,
-    createUser,
-    updateUser,
-    deleteUser,
-    readUser
+const OfficeService = {
+    getOffices,
+    createOffice,
+    readOffice,
+    updateOffice,
+    deleteOffice
 };
 
-export default UserService;
+export default OfficeService;
