@@ -14,8 +14,7 @@ import './App.css';
 import NoComponent from "./Components/Routes/noComponent";
 import Header from "./Components/Utils/header";
 import SideBar from "./Components/Utils/sideBar/sideBar";
-import SideBarMobile from "./Components/Utils/sideBar/sideBarMobile";
-import {CssBaseline, Hidden} from "@material-ui/core";
+import {CssBaseline} from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
 import Customers from "./Components/Routes/customers";
 import Users from "./Components/Routes/admin/users";
@@ -64,7 +63,7 @@ class App extends Component {
     componentDidMount() {
         const theme = JSON.parse(localStorage.getItem('theme'));
         const user = JSON.parse(localStorage.getItem('userData'));
-        if(user){
+        if (user) {
             this.setState({currentUser: user})
         }
         if (theme) {
@@ -82,7 +81,7 @@ class App extends Component {
             isLogged: logged,
             currentUser: logged ? {token, user} : {},
         });
-        if(logged){
+        if (logged) {
             let nightMode = type ? 'dark' : 'light';
             this.updateTheme({primaryColor, secondaryColor, type: nightMode})
 
@@ -93,12 +92,7 @@ class App extends Component {
         return (
             <>
                 <Header/>
-                <Hidden xsDown>
-                    <SideBar/>
-                </Hidden>
-                <Hidden smUp>
-                    <SideBarMobile/>
-                </Hidden>
+                <SideBar/>
             </>
         )
     };
@@ -148,7 +142,6 @@ class App extends Component {
 
     changePrimaryColor = (event) => {
         const primaryColor = event.target.value;
-
         this.updateTheme({
             primaryColor
         });

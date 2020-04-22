@@ -19,6 +19,14 @@ class Users extends Component {
         }
     }
 
+    componentDidMount() {
+        this.getUsers();
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return nextProps.isOpenDrawer !== this.props.isOpenDrawer
+    }
+
     onClickAction = (userId) => {
         this.setState(state => ({
             openAction: !state.openAction,
@@ -41,10 +49,6 @@ class Users extends Component {
                     {variant: 'error'});
             })
     };
-
-    componentDidMount() {
-        this.getUsers();
-    }
 
     render() {
         const {columns, data, openAction, loading, userId} = this.state;

@@ -7,13 +7,8 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import {Link} from 'react-router-dom';
-import {Icon, Tooltip, Collapse} from "@material-ui/core";
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+import {SideBarList} from "./sideBarList";
+import {Hidden, SwipeableDrawer} from "@material-ui/core";
 
 const drawerWidth = 240;
 
@@ -62,16 +57,22 @@ class SideBar extends Component {
         this.state = {
             open: false,
             expandedMenu: undefined,
-            menu: [
-                {label: "Главная", url: "/", icon: "home"},
-                {
-                    label: "Админ", url: "", icon: "build", sub: [
-                        {label: "Пользователи", url: "/users", icon: "supervised_user_circle"},
-                        {label: "Офисы", url: "/offices", icon: "supervised_user_circle"},
-                    ]
-                },
-                {label: "База Клиентов", url: "/customers", icon: "accessibility"}
-            ]
+            menu: {
+                admin: [
+                    {label: "Главная", url: "/", icon: "home"},
+                    {
+                        label: "Админ", url: "", icon: "build", sub: [
+                            {label: "Пользователи", url: "/users", icon: "supervised_user_circle"},
+                            {label: "Офисы", url: "/offices", icon: "business"},
+                        ]
+                    },
+                    {label: "База Клиентов", url: "/customers", icon: "accessibility"}
+                ],
+                manager: [
+                    {label: "Главная", url: "/", icon: "home"},
+                    {label: "База Клиентов", url: "/customers", icon: "accessibility"}
+                ]
+            }
         }
     }
 
@@ -81,91 +82,79 @@ class SideBar extends Component {
         }))
     };
 
-    renderMenuList = (menu) => {
-        const {expandedMenu} = this.state;
+    desktopDrawer = () => {
+        const {menu: {admin, manager}, expandedMenu} = this.state;
+        const {classes, isOpenDrawer, toggleDrawer, currentUser: {user}} = this.props;
+        const userMenu = user.role === 'admin' ? admin : manager;
         return (
-            menu.map((item, index) => {
-                return (
-                    <React.Fragment key={index}>
-                        {item.sub ? (
-                            <>
-                                <ListItem button onClick={() => this.expandMenuItem(item.label)}>
-                                    <ListItemIcon style={{marginLeft: 7}}>
-                                        <Icon>
-                                            {item.icon}
-                                        </Icon>
-                                    </ListItemIcon>
-                                    <ListItemText primary={item.label}/>
-                                    {expandedMenu === item.label ? <ExpandLess/> : <ExpandMore/>}
-                                </ListItem>
-                                <Collapse in={expandedMenu === item.label} timeout="auto" unmountOnExit>
-                                    <List component="div" disablePadding>
-                                        {this.renderMenuList(item.sub)}
-                                    </List>
-                                </Collapse>
-
-                            </>
-                        ) : (
-                            <ListItemLink to={item.url} primary={item.label} icon={item.icon} key={item.url}/>
-                        )}
-                    </React.Fragment>
-                )
-            })
+            <Drawer
+                variant="permanent"
+                className={clsx(classes.drawer, {
+                    [classes.drawerOpen]: isOpenDrawer,
+                    [classes.drawerClose]: !isOpenDrawer,
+                })}
+                classes={{
+                    paper: clsx({
+                        [classes.drawerOpen]: isOpenDrawer,
+                        [classes.drawerClose]: !isOpenDrawer,
+                    }),
+                }}
+            >
+                <div className={classes.toolbar}>
+                    <IconButton onClick={toggleDrawer}>
+                        <ChevronLeftIcon/>
+                    </IconButton>
+                </div>
+                <Divider/>
+                <List>
+                    <SideBarList expandedMenu={expandedMenu} expandMenuItem={this.expandMenuItem}
+                                 menu={userMenu}/>
+                </List>
+            </Drawer>
         )
     };
 
+    mobileDrawer = () => {
+        const {menu: {admin, manager}, expandedMenu} = this.state;
+        const {classes, isOpenDrawer, toggleDrawer, currentUser: {user}} = this.props;
+        const userMenu = user.role === 'admin' ? admin : manager;
+        return (
+            <SwipeableDrawer
+                variant="temporary"
+                onClose={toggleDrawer}
+                onOpen={toggleDrawer}
+                open={isOpenDrawer}
+                classes={{paper: classes.drawer}}
+            >
+                <div className={classes.toolbar}>
+                    <IconButton onClick={toggleDrawer}>
+                        <ChevronLeftIcon/>
+                    </IconButton>
+                </div>
+                <Divider/>
+                <List>
+                    <SideBarList expandedMenu={expandedMenu}
+                                 expandMenuItem={this.expandMenuItem}
+                                 menu={userMenu}
+                                 toggleDrawer={toggleDrawer}
+                    />
+                </List>
+            </SwipeableDrawer>
+        )
+    };
 
     render() {
-        const {classes, isOpenDrawer, toggleDrawer} = this.props;
-        const {menu} = this.state;
         return (
             <div>
-                <Drawer
-                    variant="permanent"
-                    className={clsx(classes.drawer, {
-                        [classes.drawerOpen]: isOpenDrawer,
-                        [classes.drawerClose]: !isOpenDrawer,
-                    })}
-                    classes={{
-                        paper: clsx({
-                            [classes.drawerOpen]: isOpenDrawer,
-                            [classes.drawerClose]: !isOpenDrawer,
-                        }),
-                    }}
-                >
-                    <div className={classes.toolbar}>
-                        <IconButton onClick={toggleDrawer}>
-                            <ChevronLeftIcon/>
-                        </IconButton>
-                    </div>
-                    <Divider/>
-                    <List>
-                        {this.renderMenuList(menu)}
-                    </List>
-
-                </Drawer>
+                <Hidden xsDown>
+                    {this.desktopDrawer()}
+                </Hidden>
+                <Hidden smUp>
+                    {this.mobileDrawer()}
+                </Hidden>
             </div>
         );
     }
 }
 
 export default AppHoc(withStyles(styles)(SideBar));
-
-
-function ListItemLink(props) {
-    const {icon, primary, to} = props;
-    return (
-        <Tooltip title={primary}>
-            <li>
-                <ListItem button component={props => <Link to={to} {...props} />}>
-                    <ListItemIcon style={{marginLeft: 7}}>
-                        <Icon>
-                            {icon}
-                        </Icon>
-                    </ListItemIcon>
-                    <ListItemText primary={primary}/>
-                </ListItem>
-            </li>
-        </Tooltip>
-    );
-}

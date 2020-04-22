@@ -19,6 +19,14 @@ class Offices extends Component {
         }
     }
 
+    componentDidMount() {
+        this.getOffices();
+    }
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return nextProps.isOpenDrawer !== this.props.isOpenDrawer
+    }
+
     onClickAction = (officeId) => {
         this.setState(state => ({
             openAction: !state.openAction,
@@ -41,10 +49,6 @@ class Offices extends Component {
                     {variant: 'error'});
             })
     };
-
-    componentDidMount() {
-        this.getOffices();
-    }
 
     render() {
         const {columns, data, openAction, loading, officeId} = this.state;

@@ -17,6 +17,10 @@ class Customers extends Component {
         }
     }
 
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        return nextProps.isOpenDrawer !== this.props.isOpenDrawer
+    }
+
 
     componentDidMount() {
         this.setState({loading: true});
