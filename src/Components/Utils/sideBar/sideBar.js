@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {SideBarList} from "./sideBarList";
 import {Hidden, SwipeableDrawer} from "@material-ui/core";
+import SideBarHeader from "./sideBarHeader";
 
 const drawerWidth = 240;
 
@@ -24,7 +25,7 @@ const styles = (theme) => ({
     toolbar: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-end',
+        justifyContent: 'space-between',
         padding: theme.spacing(0, 1),
         ...theme.mixins.toolbar,
     },
@@ -66,11 +67,24 @@ class SideBar extends Component {
                             {label: "Офисы", url: "/offices", icon: "business"},
                         ]
                     },
-                    {label: "База Клиентов", url: "/customers", icon: "accessibility"}
+                    {
+                        label: "Менеджмент", url: "", icon: "dynamic_feed", sub: [
+                            {label: "Заказы", url: "/orders", icon: "shopping_cart"},
+                            {label: "База Клиентов", url: "/customers", icon: "accessibility"},
+                            {label: "Платежи", url: "/payments", icon: "payment"},
+                        ]
+                    },
+
                 ],
                 manager: [
                     {label: "Главная", url: "/", icon: "home"},
-                    {label: "База Клиентов", url: "/customers", icon: "accessibility"}
+                    {
+                        label: "Менеджмент", url: "", icon: "dynamic_feed", sub: [
+                            {label: "Заказы", url: "/orders", icon: "shopping_cart"},
+                            {label: "База Клиентов", url: "/customers", icon: "accessibility"},
+                            {label: "Платежи", url: "/payments", icon: "payment"},
+                        ]
+                    },
                 ]
             }
         }
@@ -101,6 +115,7 @@ class SideBar extends Component {
                 }}
             >
                 <div className={classes.toolbar}>
+                    <SideBarHeader/>
                     <IconButton onClick={toggleDrawer}>
                         <ChevronLeftIcon/>
                     </IconButton>
@@ -127,6 +142,7 @@ class SideBar extends Component {
                 classes={{paper: classes.drawer}}
             >
                 <div className={classes.toolbar}>
+                    <SideBarHeader/>
                     <IconButton onClick={toggleDrawer}>
                         <ChevronLeftIcon/>
                     </IconButton>

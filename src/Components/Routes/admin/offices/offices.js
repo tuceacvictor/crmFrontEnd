@@ -23,10 +23,6 @@ class Offices extends Component {
         this.getOffices();
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return nextProps.isOpenDrawer !== this.props.isOpenDrawer
-    }
-
     onClickAction = (officeId) => {
         this.setState(state => ({
             openAction: !state.openAction,

@@ -27,12 +27,14 @@ export const SideBarList = ({menu, expandedMenu, expandMenuItem, toggleDrawer}) 
                             </ListItem>
                             <Collapse in={expandedMenu === item.label} timeout="auto" unmountOnExit>
                                 <List component="div" disablePadding>
-                                    {this.renderMenuList(item.sub)}
+                                    <SideBarList expandedMenu={expandedMenu} expandMenuItem={expandMenuItem}
+                                                 menu={item.sub}/>
                                 </List>
                             </Collapse>
                         </>
                     ) : (
-                        <ListItemLink toggleDrawer={toggleDrawer} label={item.label} url={item.url} icon={item.icon} key={item.url}/>
+                        <ListItemLink toggleDrawer={toggleDrawer} label={item.label} url={item.url} icon={item.icon}
+                                      key={item.url}/>
                     )}
                 </React.Fragment>
             )

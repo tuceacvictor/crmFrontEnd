@@ -23,9 +23,7 @@ class Users extends Component {
         this.getUsers();
     }
 
-    shouldComponentUpdate(nextProps, nextState, nextContext) {
-        return nextProps.isOpenDrawer !== this.props.isOpenDrawer
-    }
+
 
     onClickAction = (userId) => {
         this.setState(state => ({

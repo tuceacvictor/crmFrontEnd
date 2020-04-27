@@ -77,6 +77,7 @@ class App extends Component {
     };
 
     setLogin = (logged, token, user, {primaryColor, secondaryColor, type} = {}) => {
+        console.log(user)
         this.setState({
             isLogged: logged,
             currentUser: logged ? {token, user} : {},
