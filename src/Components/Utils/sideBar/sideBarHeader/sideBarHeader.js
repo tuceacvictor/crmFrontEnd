@@ -26,7 +26,7 @@ class SideBarHeader extends Component {
     };
 
     componentDidMount() {
-        const {currentUser: {user: {defaultOffice, office}}} = this.props;
+        const {currentUser: {user: {defaultOffice, office = []}}} = this.props;
         this.setState({defaultOffice: defaultOffice ? defaultOffice : office[0], offices: office}, () => {
             console.log(this.state)
         });
@@ -38,7 +38,7 @@ class SideBarHeader extends Component {
 
     render() {
         const {classes} = this.props;
-        const {defaultOffice, offices} = this.state;
+        const {defaultOffice = {}, offices} = this.state;
         return (
             <div className={classes.wrapper}>
                 <FormControl fullWidth>
