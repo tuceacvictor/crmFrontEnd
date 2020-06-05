@@ -2,7 +2,7 @@ import request from "./wrapper/request";
 
 function getData() {
     return request({
-        url: "api/office",
+        url: "api/category",
         method: "GET",
         data: {},
         headers: {
@@ -13,7 +13,7 @@ function getData() {
 
 function create(data) {
     return request({
-        url: "api/office/create",
+        url: "api/category/create",
         method: "POST",
         data: data,
         headers: {
@@ -24,7 +24,7 @@ function create(data) {
 
 function update(data) {
     return request({
-        url: "api/office/update",
+        url: "api/category/update",
         method: "PUT",
         data: data,
         headers: {
@@ -35,7 +35,7 @@ function update(data) {
 
 function deleteRecord(id) {
     return request({
-        url: "api/office/",
+        url: "api/category/",
         method: "DELETE",
         data: {id},
         headers: {
@@ -46,7 +46,7 @@ function deleteRecord(id) {
 
 function read(id) {
     return request({
-        url: "api/office/read",
+        url: "api/category/read",
         method: "POST",
         data: {id},
         headers: {
@@ -55,7 +55,7 @@ function read(id) {
     })
 }
 
-const OfficeService = {
+const CategoryService = {
     getData,
     create,
     read,
@@ -63,4 +63,4 @@ const OfficeService = {
     deleteRecord
 };
 
-export default OfficeService;
+export default CategoryService;

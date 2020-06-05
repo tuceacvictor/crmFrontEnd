@@ -68,6 +68,13 @@ class SideBar extends Component {
                         ]
                     },
                     {
+                        label: "Склад", url: "", icon: "layers", sub: [
+                            {label: "Склад Запчастей", url: "/stock", icon: "supervised_user_circle"},
+                            {label: "Брак", url: "/defectStock", icon: "business"},
+                            {label: "Категории", url: "/category", icon: "business"},
+                        ]
+                    },
+                    {
                         label: "Менеджмент", url: "", icon: "dynamic_feed", sub: [
                             {label: "Заказы", url: "/orders", icon: "shopping_cart"},
                             {label: "База Клиентов", url: "/customers", icon: "accessibility"},

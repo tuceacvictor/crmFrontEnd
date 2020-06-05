@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
-import MaterialTable from "material-table";
-import UserAction from "./userAction/userAction";
 import UserService from "../../../../Services/API/user";
 import {withSnackbar} from "notistack";
-import getSafe from "../../../../Helpers/getSafeValue";
+import CrudDefault from "../../../Utils/crudDefault/crudDefault";
+import OfficeService from "../../../../Services/API/office";
 
 class Users extends Component {
     constructor(props) {
@@ -15,68 +14,52 @@ class Users extends Component {
                 {title: 'Роль', field: 'role'},],
             data: [],
             openAction: false,
-            user: {}
+            user: {},
+            formSchema: [
+                {name: 'login', label: "Логин", disabled: false, type: 'string', autoFocus: true},
+                {name: 'email', label: "Email", disabled: false, type: 'string', autoFocus: false},
+                {
+                    name: 'role',
+                    label: "Роль",
+                    disabled: false,
+                    type: 'select',
+                    autoFocus: false,
+                    options: [
+                        {label: 'Менеджер', value: 'manager'},
+                        {label: 'Админ', value: 'admin'}
+
+                    ]
+                },
+                {
+                    name: 'office',
+                    label: "Офисы",
+                    disabled: false,
+                    type: 'selectRemote',
+                    autoFocus: false,
+                    isArray: true,
+                    service: OfficeService
+                },
+
+            ]
         }
     }
 
-    componentDidMount() {
-        this.getUsers();
-    }
-
-
-
-    onClickAction = (userId) => {
-        this.setState(state => ({
-            openAction: !state.openAction,
-            userId: userId
-        }))
-    };
-
-    getUsers = () => {
-        const {enqueueSnackbar} = this.props;
-        this.setState({loading: true});
-        UserService
-            .getUsers()
-            .then(res => {
-                this.setState({data: res, loading: false})
-            })
-            .catch(err => {
-                this.setState({loading: false});
-                enqueueSnackbar(
-                    getSafe(() => err.data.message, 'Произошла неизвестная ошибка!'),
-                    {variant: 'error'});
-            })
-    };
 
     render() {
-        const {columns, data, openAction, loading, userId} = this.state;
+        const {columns, formSchema} = this.state;
         return (
             <div style={{width: '100%'}}>
-                <MaterialTable
-                    isLoading={loading}
-                    title={'Пользователи'}
+                <CrudDefault
+                    service={UserService}
                     columns={columns}
-                    data={data}
-                    onRowClick={(e, row) => this.onClickAction(row.id)}
-                    actions={[
-                        {
-                            icon: 'add',
-                            tooltip: 'Создать Пользователя',
-                            isFreeAction: true,
-                            onClick: () => this.onClickAction(),
-                        }
-                    ]}
+                    title={'Пользователи'}
+                    actionTitle={'Пользователь'}
+                    tooltipCreate={'Создать Пользователя'}
+                    creatable
+                    formSchema={formSchema}
                 />
-                {
-                    openAction && (
-                        <UserAction open={openAction}
-                                    getUsers={this.getUsers}
-                                    onClose={this.onClickAction}
-                                    userId={userId}
-                        />
-                    )
-                }
             </div>
+
         );
     }
 }

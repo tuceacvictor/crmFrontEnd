@@ -9,7 +9,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import List from "@material-ui/core/List";
 import {ListItemLink} from "./ListItemLink";
 
-export const SideBarList = ({menu, expandedMenu, expandMenuItem, toggleDrawer}) => {
+export const SideBarList = ({menu, expandedMenu, expandMenuItem, toggleDrawer, level = 0}) => {
     return (
         menu.map((item, index) => {
             return (
@@ -28,13 +28,14 @@ export const SideBarList = ({menu, expandedMenu, expandMenuItem, toggleDrawer}) 
                             <Collapse in={expandedMenu === item.label} timeout="auto" unmountOnExit>
                                 <List component="div" disablePadding>
                                     <SideBarList expandedMenu={expandedMenu} expandMenuItem={expandMenuItem}
+                                                 level={1}
                                                  menu={item.sub}/>
                                 </List>
                             </Collapse>
                         </>
                     ) : (
                         <ListItemLink toggleDrawer={toggleDrawer} label={item.label} url={item.url} icon={item.icon}
-                                      key={item.url}/>
+                                      key={item.url} level={level}/>
                     )}
                 </React.Fragment>
             )

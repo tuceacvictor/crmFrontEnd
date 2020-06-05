@@ -22,7 +22,7 @@ function changePassword (data) {
     });
 }
 
-function getUsers() {
+function getData() {
     return request({
         url: "api/users",
         method: "GET",
@@ -33,7 +33,7 @@ function getUsers() {
     })
 }
 
-function createUser(data) {
+function create(data) {
     return request({
         url: "api/users",
         method: "POST",
@@ -44,7 +44,7 @@ function createUser(data) {
     })
 }
 
-function updateUser(data) {
+function update(data) {
     return request({
         url: "api/users/update",
         method: "PUT",
@@ -55,7 +55,7 @@ function updateUser(data) {
     })
 }
 
-function deleteUser(id) {
+function deleteRecord(id) {
     return request({
         url: "api/users/delete",
         method: "DELETE",
@@ -66,7 +66,7 @@ function deleteUser(id) {
     })
 }
 
-function readUser(id) {
+function read(id) {
     return request({
         url: "api/users/read",
         method: "POST",
@@ -80,11 +80,11 @@ function readUser(id) {
 const UserService = {
     updateProfile,
     changePassword,
-    getUsers,
-    createUser,
-    updateUser,
-    deleteUser,
-    readUser
+    getData,
+    create,
+    update,
+    deleteRecord,
+    read
 };
 
 export default UserService;

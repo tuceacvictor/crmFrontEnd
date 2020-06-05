@@ -2,7 +2,7 @@ import request from "./wrapper/request";
 
 function getData() {
     return request({
-        url: "api/office",
+        url: "api/stock",
         method: "GET",
         data: {},
         headers: {
@@ -13,7 +13,7 @@ function getData() {
 
 function create(data) {
     return request({
-        url: "api/office/create",
+        url: "api/stock/create",
         method: "POST",
         data: data,
         headers: {
@@ -24,7 +24,7 @@ function create(data) {
 
 function update(data) {
     return request({
-        url: "api/office/update",
+        url: "api/stock/update",
         method: "PUT",
         data: data,
         headers: {
@@ -35,7 +35,7 @@ function update(data) {
 
 function deleteRecord(id) {
     return request({
-        url: "api/office/",
+        url: "api/stock/",
         method: "DELETE",
         data: {id},
         headers: {
@@ -46,7 +46,7 @@ function deleteRecord(id) {
 
 function read(id) {
     return request({
-        url: "api/office/read",
+        url: "api/stock/read",
         method: "POST",
         data: {id},
         headers: {
@@ -54,13 +54,24 @@ function read(id) {
         }
     })
 }
+function moveToDefect(record) {
+    return request({
+        url: "api/stock/moveToDefect",
+        method: "POST",
+        data: record,
+        headers: {
+            'Authorization': `Bearer ${(JSON.parse(localStorage.getItem('userData')) || {}).token}`
+        }
+    })
+}
 
-const OfficeService = {
+const StockService = {
     getData,
     create,
     read,
     update,
-    deleteRecord
+    deleteRecord,
+    moveToDefect
 };
 
-export default OfficeService;
+export default StockService;

@@ -6,10 +6,10 @@ import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
 import {Icon, Tooltip} from "@material-ui/core";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 
-export const ListItemLink = ({url, label, icon, toggleDrawer}) => {
+export const ListItemLink = ({url, label, icon, toggleDrawer, level}) => {
     return (
         <Tooltip title={label}>
-            <li>
+            <li style={{marginLeft: 15 * level}}>
                 <ListItem onClick={toggleDrawer && toggleDrawer} button component={props => <Link to={url} {...props} />}>
                     <ListItemIcon style={{marginLeft: 7}}>
                         <Icon>

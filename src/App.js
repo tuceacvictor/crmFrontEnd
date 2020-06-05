@@ -8,20 +8,24 @@ import {AppProvider} from './Services/Context/AppContext'
 import history from "./Services/history";
 import {PrivateRoute} from "./Services/PrivateRoute";
 import {SnackbarProvider} from 'notistack';
-import Login from "./Components/Routes/login";
-import Home from "./Components/Routes/home";
 import './App.css';
-import NoComponent from "./Components/Routes/noComponent";
-import Header from "./Components/Utils/header";
-import SideBar from "./Components/Utils/sideBar/sideBar";
+import NoComponent from "./Components/Utils/noComponent";
 import {CssBaseline} from "@material-ui/core";
 import withStyles from "@material-ui/core/styles/withStyles";
-import Customers from "./Components/Routes/customers";
-import Users from "./Components/Routes/admin/users";
 import colors from './Helpers/colors';
 import settings from './Helpers/settings';
 import {createMuiTheme, MuiThemeProvider} from "@material-ui/core/styles";
+import Header from "./Components/Utils/header";
+import SideBar from "./Components/Utils/sideBar/sideBar";
+import Login from "./Components/Routes/login";
+import Home from "./Components/Routes/home";
+import Customers from "./Components/Routes/management/customers";
+import Users from "./Components/Routes/admin/users";
 import Offices from "./Components/Routes/admin/offices/offices";
+import Orders from "./Components/Routes/management/orders/orders";
+import Stock from "./Components/Routes/stock/stock/stock";
+import DefectStock from "./Components/Routes/stock/defectStock/defectStock";
+import Category from "./Components/Routes/stock/categories/category";
 
 const styles = (theme) => ({
     root: {
@@ -29,8 +33,7 @@ const styles = (theme) => ({
     },
     content: {
         flexGrow: 1,
-        padding: theme.spacing(1),
-        paddingTop: theme.spacing(9)
+        paddingTop: theme.spacing(8.8)
     },
     toolbar: {
         display: 'flex',
@@ -56,7 +59,8 @@ class App extends Component {
             primaryColor: settings.theme.primaryColor.name,
             secondaryColor: settings.theme.secondaryColor.name,
             type: settings.theme.type,
-            currentUser: {user: {}, theme: {}, token: ""}
+            currentUser: {user: {}, theme: {}, token: ""},
+            currentOffice: undefined
         };
     }
 
@@ -77,7 +81,6 @@ class App extends Component {
     };
 
     setLogin = (logged, token, user, {primaryColor, secondaryColor, type} = {}) => {
-        console.log(user)
         this.setState({
             isLogged: logged,
             currentUser: logged ? {token, user} : {},
@@ -141,6 +144,10 @@ class App extends Component {
         });
     };
 
+    setOffice = (officeId) => {
+      this.setState({currentOffice: officeId})
+    };
+
     changePrimaryColor = (event) => {
         const primaryColor = event.target.value;
         this.updateTheme({
@@ -170,6 +177,7 @@ class App extends Component {
                 value={{
                     isOpenDrawer: this.state.isOpenDrawer,
                     currentUser: this.state.currentUser,
+                    currentOffice: this.state.currentOffice,
                     themeValues: {
                         primaryColor: this.state.primaryColor,
                         secondaryColor: this.state.secondaryColor,
@@ -180,7 +188,8 @@ class App extends Component {
                     changeThemeType: this.changeThemeType,
                     updateProfile: this.updateProfile,
                     toggleDrawer: this.toggleDrawer,
-                    setLogin: this.setLogin
+                    setLogin: this.setLogin,
+                    setOffice: this.setOffice
                 }}
             >
                 <MuiThemeProvider theme={theme}>
@@ -203,6 +212,10 @@ class App extends Component {
                                             <PrivateRoute exact path={"/customers"} component={Customers}/>
                                             <PrivateRoute exact path={"/users"} component={Users}/>
                                             <PrivateRoute exact path={"/offices"} component={Offices}/>
+                                            <PrivateRoute exact path={"/orders"} component={Orders} />
+                                            <PrivateRoute exact path={"/stock"} component={Stock} />
+                                            <PrivateRoute exact path={"/defectStock"} component={DefectStock} />
+                                            <PrivateRoute exact path={"/category"} component={Category} />
                                             <Route component={NoComponent}/>
                                         </Switch>
                                     </Router>

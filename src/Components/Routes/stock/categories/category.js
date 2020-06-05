@@ -1,20 +1,21 @@
 import React, {Component} from 'react';
 import {withSnackbar} from "notistack";
-import OfficeService from "../../../../Services/API/office";
 import CrudDefault from "../../../Utils/crudDefault/crudDefault";
+import CategoryService from "../../../../Services/API/categories";
 
-class Offices extends Component {
+class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
             columns: [
                 {title: 'Название', field: 'name'},
-                {title: 'Адресс', field: 'address'},
             ],
             formSchema: [
                 {name: 'name', label: "Название", disabled: false, type: 'string', autoFocus: true},
-                {name: 'address', label: "Адресс", disabled: false, type: 'string', autoFocus: false}
-            ]
+            ],
+            data: [],
+            openAction: false,
+            record: {}
         }
     }
 
@@ -22,16 +23,15 @@ class Offices extends Component {
         const {columns, formSchema} = this.state;
         return (
             <CrudDefault
-                title={"Офисы"}
-                actionTitle={'Офис'}
-                formSchema={formSchema}
                 columns={columns}
-                service={OfficeService}
                 creatable={true}
-                tooltipCreate={'Создать Офис'}
+                service={CategoryService}
+                title={'Категории склада'}
+                actionTitle={"Категория"}
+                formSchema={formSchema}
             />
         );
     }
 }
 
-export default withSnackbar(Offices);
+export default withSnackbar(Category);

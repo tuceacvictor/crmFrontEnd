@@ -26,14 +26,16 @@ class SideBarHeader extends Component {
     };
 
     componentDidMount() {
-        const {currentUser: {user: {defaultOffice, office = []}}} = this.props;
-        this.setState({defaultOffice: defaultOffice ? defaultOffice : office[0], offices: office}, () => {
-            console.log(this.state)
-        });
+        const {currentUser: {user: {defaultOffice, office = []}}, setOffice} = this.props;
+        let currentOffice = defaultOffice ? defaultOffice.id : office.length > 0 ? office[0].id : null;
+        this.setState({defaultOffice: currentOffice, offices: office});
+        setOffice(currentOffice)
     };
 
     onChange = (event) => {
-
+        const {setOffice} = this.props;
+        this.setState({defaultOffice: event.target.value});
+        setOffice(event.target.value)
     };
 
     render() {
@@ -44,9 +46,9 @@ class SideBarHeader extends Component {
                 <FormControl fullWidth>
                     <InputLabel>Офис</InputLabel>
                     <Select
-                        value={defaultOffice.id || 0}
+                        value={defaultOffice || 0}
                         disableUnderline={true}
-
+                        onChange={this.onChange}
                     >
                         {offices.map(office => {
                             return (

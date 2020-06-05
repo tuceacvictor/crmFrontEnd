@@ -1,7 +1,7 @@
 import React from 'react';
 import {AppConsumer} from '../../Context/AppContext'
 
-const ListHoc = (Wrapped) => {
+const AppHoc = (Wrapped) => {
     return (props) => {
         return (
             <AppConsumer>
@@ -16,4 +16,4 @@ const ListHoc = (Wrapped) => {
         )
     }
 };
-export default ListHoc;
+export default AppHoc;
