@@ -22,9 +22,9 @@ function changePassword (data) {
     });
 }
 
-function getData() {
+function getData(page, pageSize, search) {
     return request({
-        url: "api/users",
+        url: `api/users?page=${page}&pageSize=${pageSize}&search=${search}`,
         method: "GET",
         data: {},
         headers: {

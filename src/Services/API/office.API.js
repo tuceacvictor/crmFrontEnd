@@ -1,8 +1,8 @@
 import request from "./wrapper/request";
 
-function getData() {
+function getData(page, pageSize, search) {
     return request({
-        url: "api/office",
+        url: `api/office?page=${page}&pageSize=${pageSize}&search=${search}`,
         method: "GET",
         data: {},
         headers: {

@@ -127,7 +127,7 @@ const SelectRemote = ({field, onChangeRemote, record}) => {
         (async () => {
             const data = await field.service.getData();
             if (active) {
-                setOptions(data)
+                setOptions(data.rows)
             }
         })();
 

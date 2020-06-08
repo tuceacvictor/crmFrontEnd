@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/styles";
-import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField";
+import ReactSelect from "../../../../../Utils/form/fields/reactSelectMaterial/reactSelect";
 
 const styles = (theme) => ({
     wrapper: {
@@ -26,8 +26,16 @@ const styles = (theme) => ({
 class ClientBlock extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            values: {
+                phone: '',
+                name: '',
+                whereKnown_id: ''
+            }
+        };
     }
+
+
 
     render() {
         const {classes} = this.props;
@@ -37,11 +45,8 @@ class ClientBlock extends Component {
                     <h4 className={classes.title}>Клиент</h4>
                 </div>
                 <div>
-                    <TextField
-                        className={classes.field}
+                    <ReactSelect
                         label={'Номер Телефона'}
-                        fullWidth
-                        variant={"outlined"}
                     />
                     <TextField
                         className={classes.field}

@@ -22,7 +22,7 @@ class CrudDefault extends Component {
     async componentDidMount() {
         const {columns} = this.props;
         this.setColumns(columns);
-        this.getData();
+    //    this.getData();
 
     }
 
@@ -37,11 +37,11 @@ class CrudDefault extends Component {
         }))
     };
 
-    getData = () => {
+    getData1 = (query) => {
         const {enqueueSnackbar, service} = this.props;
         this.setState({loading: true});
         service
-            .getData()
+            .getData(query.page, query.pageSize, query.search)
             .then(res => {
                 this.setState({data: res, loading: false})
             })
@@ -70,7 +70,20 @@ class CrudDefault extends Component {
                     isLoading={loading}
                     title={title}
                     columns={columns}
-                    data={data}
+                    data={query =>
+                        new Promise((resolve, reject) => {
+                            service
+                                .getData(query.page, query.pageSize, query.search)
+                                .then(response => {
+                                    resolve({
+                                        data: response.rows,
+                                        page: response.page,
+                                        totalCount: response.count
+                                    })
+                                })
+                        })
+                    }
+
                     onRowClick={(e, row) => this.onClickAction(row.id)}
                     actions={creatable && [
                         {
@@ -85,7 +98,7 @@ class CrudDefault extends Component {
                     openAction && (
                         <CrudDefaultAction
                                      open={openAction}
-                                     getData={this.getData}
+                                     getData={() => {}}
                                      onClose={this.onClickAction}
                                      recordId={recordId}
                                      service={service}
