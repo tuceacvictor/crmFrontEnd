@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {withSnackbar} from "notistack";
 import AppHoc from "../../../Services/HocHelpers/AppHoc";
 import PropTypes from 'prop-types';
-import getSafe from "../../../Helpers/getSafeValue";
 import MaterialTable from "material-table";
 import CrudDefaultAction from "./crudDefaultAction/crudDefaultAction";
 
@@ -14,7 +13,6 @@ class CrudDefault extends Component {
         this.tableRef = React.createRef();
         this.state = {
             columns: [],
-            data: [],
             openAction: false,
             record: {}
         }
@@ -23,7 +21,6 @@ class CrudDefault extends Component {
     async componentDidMount() {
         const {columns} = this.props;
         this.setColumns(columns);
-    //    this.getData();
 
     }
 
@@ -38,24 +35,8 @@ class CrudDefault extends Component {
         }))
     };
 
-    getData1 = (query) => {
-        const {enqueueSnackbar, service} = this.props;
-        this.setState({loading: true});
-        service
-            .getData(query.page, query.pageSize, query.search)
-            .then(res => {
-                this.setState({data: res, loading: false})
-            })
-            .catch(err => {
-                this.setState({loading: false});
-                enqueueSnackbar(
-                    getSafe(() => err.data.message, 'Произошла неизвестная ошибка!'),
-                    {variant: 'error'});
-            })
-    };
-
     render() {
-        const {columns, data, openAction, loading, recordId} = this.state;
+        const {columns, openAction, loading, recordId} = this.state;
         const {title,
             tooltipCreate,
             service,
@@ -73,7 +54,7 @@ class CrudDefault extends Component {
                     title={title}
                     columns={columns}
                     data={query =>
-                        new Promise((resolve, reject) => {
+                        new Promise((resolve) => {
                             service
                                 .getData(query.page, query.pageSize, query.search)
                                 .then(response => {
