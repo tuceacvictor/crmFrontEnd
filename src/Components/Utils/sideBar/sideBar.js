@@ -65,6 +65,7 @@ class SideBar extends Component {
                         label: "Админ", url: "", icon: "build", sub: [
                             {label: "Пользователи", url: "/users", icon: "supervised_user_circle"},
                             {label: "Офисы", url: "/offices", icon: "business"},
+                            {label: "Откуда Узнали", url: "/whereKnown", icon: "business"},
                         ]
                     },
                     {
@@ -77,6 +78,7 @@ class SideBar extends Component {
                     {
                         label: "Менеджмент", url: "", icon: "dynamic_feed", sub: [
                             {label: "Заказы", url: "/orders", icon: "shopping_cart"},
+                            {label: "Клиенты", url: "/clients", icon: "shopping_cart"},
                             {label: "База Клиентов", url: "/customers", icon: "accessibility"},
                             {label: "Платежи", url: "/payments", icon: "payment"},
                         ]

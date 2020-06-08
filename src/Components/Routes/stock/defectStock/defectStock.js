@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import {withSnackbar} from "notistack";
-import DefectStockService from "../../../../Services/API/defectStock";
+import DefectStockService from "../../../../Services/API/defectStock.API";
 import CrudDefault from "../../../Utils/crudDefault/crudDefault";
-import CategoryService from "../../../../Services/API/categories";
+import CategoryService from "../../../../Services/API/categories.API";
 
 class DefectStock extends Component {
     constructor(props) {

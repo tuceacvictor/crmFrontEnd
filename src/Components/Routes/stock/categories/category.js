@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withSnackbar} from "notistack";
 import CrudDefault from "../../../Utils/crudDefault/crudDefault";
-import CategoryService from "../../../../Services/API/categories";
+import CategoryService from "../../../../Services/API/categories.API";
 
 class Category extends Component {
     constructor(props) {

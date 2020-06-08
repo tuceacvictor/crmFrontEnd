@@ -26,6 +26,8 @@ import Orders from "./Components/Routes/management/orders/orders";
 import Stock from "./Components/Routes/stock/stock/stock";
 import DefectStock from "./Components/Routes/stock/defectStock/defectStock";
 import Category from "./Components/Routes/stock/categories/category";
+import WhereKnown from "./Components/Routes/admin/whereKnown/whereKnown";
+import Client from "./Components/Routes/management/clients/clients";
 
 const styles = (theme) => ({
     root: {
@@ -216,6 +218,8 @@ class App extends Component {
                                             <PrivateRoute exact path={"/stock"} component={Stock} />
                                             <PrivateRoute exact path={"/defectStock"} component={DefectStock} />
                                             <PrivateRoute exact path={"/category"} component={Category} />
+                                            <PrivateRoute exact path={"/whereKnown"} component={WhereKnown} />
+                                            <PrivateRoute exact path={"/clients"} component={Client} />
                                             <Route component={NoComponent}/>
                                         </Switch>
                                     </Router>

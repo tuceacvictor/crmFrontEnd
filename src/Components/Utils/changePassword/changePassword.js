@@ -12,7 +12,7 @@ import {
 import CloseIcon from "@material-ui/core/SvgIcon/SvgIcon";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
-import UserService from "../../../Services/API/user";
+import UserService from "../../../Services/API/user.API";
 import getSafe from "../../../Helpers/getSafeValue";
 import {withSnackbar} from "notistack";
 import {Formik, Form, Field} from 'formik';

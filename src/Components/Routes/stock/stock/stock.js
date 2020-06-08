@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withSnackbar} from "notistack";
-import StockService from "../../../../Services/API/stock";
-import CategoryService from "../../../../Services/API/categories";
+import StockService from "../../../../Services/API/stock.API";
+import CategoryService from "../../../../Services/API/categories.API";
 import CrudDefault from "../../../Utils/crudDefault/crudDefault";
 import Button from "@material-ui/core/Button";
 import {Dialog, DialogActions, DialogTitle, IconButton, Typography} from "@material-ui/core";

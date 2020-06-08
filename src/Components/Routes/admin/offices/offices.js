@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withSnackbar} from "notistack";
-import OfficeService from "../../../../Services/API/office";
+import OfficeService from "../../../../Services/API/office.API";
 import CrudDefault from "../../../Utils/crudDefault/crudDefault";
 
 class Offices extends Component {

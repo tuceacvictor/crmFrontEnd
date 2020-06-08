@@ -20,7 +20,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
 import colors from "../../../Helpers/colors";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import UserService from "../../../Services/API/user";
+import UserService from "../../../Services/API/user.API";
 import getSafe from "../../../Helpers/getSafeValue";
 import {withSnackbar} from "notistack";
 

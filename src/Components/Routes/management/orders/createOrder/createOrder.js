@@ -11,6 +11,10 @@ import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import {useTheme} from '@material-ui/core/styles';
+import ClientBlock from "./client";
+import DialogContent from "@material-ui/core/DialogContent";
+import DeviceBlock from "./device/device";
+import OtherInformationBlock from "./otherInformation/otherInformation";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
@@ -52,11 +56,17 @@ class CreateOrder extends Component {
                 <Dialog
                     open={open}
                     onClose={toggleCreate}
-                    maxWidth={"xl"}
+                    maxWidth={"md"}
+                    scroll={"paper"}
                     fullWidth
                     TransitionComponent={Transition}
                 >
                     <DialogAppBar classes={classes} toggleCreate={toggleCreate}/>
+                    <DialogContent>
+                        <ClientBlock/>
+                        <DeviceBlock/>
+                        {/*<OtherInformationBlock/>*/}
+                    </DialogContent>
                 </Dialog>
             </div>
         );

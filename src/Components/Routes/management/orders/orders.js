@@ -17,7 +17,7 @@ class Orders extends Component {
         this.state = {
             search: '',
             filter: {},
-            isOpenCreate: false,
+            isOpenCreate: true,
         };
     }
 

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import UserService from "../../../../Services/API/user";
+import UserService from "../../../../Services/API/user.API";
 import {withSnackbar} from "notistack";
 import CrudDefault from "../../../Utils/crudDefault/crudDefault";
-import OfficeService from "../../../../Services/API/office";
+import OfficeService from "../../../../Services/API/office.API";
 
 class Users extends Component {
     constructor(props) {

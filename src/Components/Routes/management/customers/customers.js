@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import CustomerService from "../../../../Services/API/customer";
+import CustomerService from "../../../../Services/API/customer.API";
 import MaterialTable from "material-table";
 
 
