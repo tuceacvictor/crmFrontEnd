@@ -49,6 +49,21 @@ const styles = () => ({
     }
 });
 
+const defaultAdditional = {
+    page: 0
+};
+
+const loadPageOptions = async (q, prevOptions, { page }) => {
+    const { options, hasMore } = await loadOptions(q, page);
+    return {
+        options,
+        hasMore,
+        additional: {
+            page: page + 1
+        }
+    };
+};
+
 const ReactSelect = (props) => {
     const {classes} = props;
     const {value, label, onChange} = props;
@@ -66,7 +81,7 @@ const ReactSelect = (props) => {
 
         }),
         clearIndicator: () => ({
-            display: 'none'
+            display: 'block'
         }),
         option: () => ({}),
         input: () => ({
@@ -86,8 +101,10 @@ const ReactSelect = (props) => {
             label={label}
             placeholder={''}
             styles={customStyles}
-            loadOptions={loadOptions}
+            additional={defaultAdditional}
+            loadOptions={loadPageOptions}
             onChange={onChange}
+            isClearable
             classes={classes}
             components={{
                 Control,

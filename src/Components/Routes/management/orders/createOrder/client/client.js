@@ -31,14 +31,40 @@ class ClientBlock extends Component {
                 phone: '',
                 name: '',
                 whereKnown_id: ''
-            }
+            },
+            isAutoComplete: false
         };
     }
+
+
+    onChangeRemote = (value) => {
+        if(value !== null){
+            this.setState({
+                values: {
+                    phone: value.record.phone,
+                    name: value.record.name,
+                    whereKnown_id: value.record.whereKnown_id,
+                },
+                isAutoComplete: true
+            })
+        }else{
+            this.setState({
+                values: {
+                    phone: '',
+                    name: '',
+                    whereKnown_id: '',
+                },
+                isAutoComplete: true
+            })
+        }
+
+    };
 
 
 
     render() {
         const {classes} = this.props;
+        const {values, isAutoComplete} = this.state;
         return (
             <div className={classes.wrapper}>
                 <div>
@@ -47,15 +73,20 @@ class ClientBlock extends Component {
                 <div>
                     <ReactSelect
                         label={'Номер Телефона'}
+                        onChange={this.onChangeRemote}
                     />
                     <TextField
+                        disabled={isAutoComplete}
                         className={classes.field}
+                        value={values.name}
                         label={'Имя'}
                         fullWidth
                         variant={"outlined"}
                     />
                     <TextField
+                        disabled={isAutoComplete}
                         className={classes.field}
+                        value={values.whereKnown_id}
                         label={'Откуда Узнал'}
                         fullWidth
                         variant={"outlined"}

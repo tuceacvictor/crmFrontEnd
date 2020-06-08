@@ -1,40 +1,18 @@
-const options = [];
-for (let i = 0; i < 50; ++i) {
-    options.push({
-        value: i + 1,
-        label: `Option ${i + 1}`
-    });
-}
+import CustomerService from "../../../../../Services/API/client.API";
 
-const sleep = ms =>
-    new Promise(resolve => {
-        setTimeout(() => {
-            resolve();
-        }, ms);
-    });
 
-const loadOptions = async (search, prevOptions) => {
-    await sleep(1000);
 
-    let filteredOptions;
-    if (!search) {
-        filteredOptions = options;
-    } else {
-        const searchLower = search.toLowerCase();
+const getData = async (page, pageSize = 10, search) => {
+  return await CustomerService.getData(page, pageSize, search)
 
-        filteredOptions = options.filter(({ label }) =>
-            label.toLowerCase().includes(searchLower)
-        );
-    }
+};
 
-    const hasMore = filteredOptions.length > prevOptions.length + 10;
-    const slicedOptions = filteredOptions.slice(
-        prevOptions.length,
-        prevOptions.length + 10
-    );
-
+const loadOptions = async (search, page) => {
+    const data = await getData(page, 10, search);
+    const totalPages = Math.ceil(data.count / 10);
+    const hasMore = page < totalPages;
     return {
-        options: slicedOptions,
+        options: data.rows.map(item => { return {value: item.phone, label: item.phone, record: item}}),
         hasMore
     };
 };
