@@ -29,6 +29,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
                 <TextField
                     autoFocus={field.autoFocus}
                     disabled={field.disabled}
+                    variant={field.variant}
                     name={field.name}
                     label={field.label}
                     value={record[field.name] || ''}
@@ -41,6 +42,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
             return <FormControl fullWidth>
                 <TextField
                     autoFocus={field.autoFocus}
+                    variant={field.variant}
                     disabled={field.disabled}
                     name={field.name}
                     label={field.label}
@@ -54,6 +56,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
             return <FormControl fullWidth>
                 <TextField
                     autoFocus={field.autoFocus}
+                    variant={field.variant}
                     disabled={field.disabled}
                     name={field.name}
                     label={field.label}
@@ -67,6 +70,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
             return <FormControl fullWidth>
                 <TextField
                     autoFocus={field.autoFocus}
+                    variant={field.variant}
                     disabled={field.disabled}
                     name={field.name}
                     label={field.label}
@@ -81,6 +85,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
                 <TextField
                     autoFocus={field.autoFocus}
                     disabled={field.disabled}
+                    variant={field.variant}
                     select
                     name={field.name}
                     label={field.label}
