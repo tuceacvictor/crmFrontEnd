@@ -11,6 +11,7 @@ import CrudDefaultAction from "./crudDefaultAction/crudDefaultAction";
 class CrudDefault extends Component {
     constructor(props) {
         super(props);
+        this.tableRef = React.createRef();
         this.state = {
             columns: [],
             data: [],
@@ -68,6 +69,7 @@ class CrudDefault extends Component {
             <div style={{width: '100%'}}>
                 <MaterialTable
                     isLoading={loading}
+                    tableRef={this.tableRef}
                     title={title}
                     columns={columns}
                     data={query =>
@@ -98,7 +100,7 @@ class CrudDefault extends Component {
                     openAction && (
                         <CrudDefaultAction
                                      open={openAction}
-                                     getData={() => {}}
+                                     getData={() => {this.tableRef.current.onQueryChange()}}
                                      onClose={this.onClickAction}
                                      recordId={recordId}
                                      service={service}
