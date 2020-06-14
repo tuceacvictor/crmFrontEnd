@@ -65,7 +65,7 @@ class CreateOrder extends Component {
                     <DialogContent>
                         <ClientBlock/>
                         <DeviceBlock/>
-                        {/*<OtherInformationBlock/>*/}
+                        <OtherInformationBlock/>
                     </DialogContent>
                 </Dialog>
             </div>

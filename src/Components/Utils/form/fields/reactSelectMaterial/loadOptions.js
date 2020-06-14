@@ -1,18 +1,14 @@
-import CustomerService from "../../../../../Services/API/client.API";
-
-
-
-const getData = async (page, pageSize = 10, search) => {
-  return await CustomerService.getData(page, pageSize, search)
+const getData = async (page, pageSize = 10, search, service) => {
+  return await service.getData(page, pageSize, search)
 
 };
 
-const loadOptions = async (search, page) => {
-    const data = await getData(page, 10, search);
+const loadOptions = async (search, page, service, getLabel, getValue) => {
+    const data = await getData(page, 10, search, service);
     const totalPages = Math.ceil(data.count / 10);
     const hasMore = page < totalPages;
     return {
-        options: data.rows.map(item => { return {value: item.phone, label: item.phone, record: item}}),
+        options: data.rows.map(item => { return {value: item[getValue], label: item[getLabel], record: item}}),
         hasMore
     };
 };

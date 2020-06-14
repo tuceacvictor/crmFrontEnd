@@ -28,6 +28,10 @@ import DefectStock from "./Components/Routes/stock/defectStock/defectStock";
 import Category from "./Components/Routes/stock/categories/category";
 import WhereKnown from "./Components/Routes/admin/whereKnown/whereKnown";
 import Client from "./Components/Routes/management/clients/clients";
+import Device from "./Components/Routes/device/device/device";
+import Device_brand from "./Components/Routes/device/device_brand/device_brand";
+import Device_type from "./Components/Routes/device/device_type/device_type";
+import Device_model from "./Components/Routes/device/device_model/device_model";
 
 const styles = (theme) => ({
     root: {
@@ -220,6 +224,11 @@ class App extends Component {
                                             <PrivateRoute exact path={"/category"} component={Category} />
                                             <PrivateRoute exact path={"/whereKnown"} component={WhereKnown} />
                                             <PrivateRoute exact path={"/clients"} component={Client} />
+
+                                            <PrivateRoute exact path={"/devices"} component={Device} />
+                                            <PrivateRoute exact path={"/deviceType"} component={Device_type} />
+                                            <PrivateRoute exact path={"/deviceBrand"} component={Device_brand} />
+                                            <PrivateRoute exact path={"/deviceModel"} component={Device_model} />
                                             <Route component={NoComponent}/>
                                         </Switch>
                                     </Router>

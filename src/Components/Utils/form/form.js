@@ -28,6 +28,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
             return <FormControl fullWidth>
                 <TextField
                     autoFocus={field.autoFocus}
+                    style={{margin: '5px 0'}}
                     disabled={field.disabled}
                     variant={field.variant}
                     name={field.name}
@@ -42,6 +43,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
             return <FormControl fullWidth>
                 <TextField
                     autoFocus={field.autoFocus}
+                    style={{margin: '5px 0'}}
                     variant={field.variant}
                     disabled={field.disabled}
                     name={field.name}
@@ -56,6 +58,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
             return <FormControl fullWidth>
                 <TextField
                     autoFocus={field.autoFocus}
+                    style={{margin: '5px 0'}}
                     variant={field.variant}
                     disabled={field.disabled}
                     name={field.name}
@@ -70,6 +73,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
             return <FormControl fullWidth>
                 <TextField
                     autoFocus={field.autoFocus}
+                    style={{margin: '5px 0'}}
                     variant={field.variant}
                     disabled={field.disabled}
                     name={field.name}
@@ -84,6 +88,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
             return <FormControl fullWidth>
                 <TextField
                     autoFocus={field.autoFocus}
+                    style={{margin: '5px 0'}}
                     disabled={field.disabled}
                     variant={field.variant}
                     select
@@ -107,6 +112,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
             return <FormControl fullWidth>
                 <TextField
                     autoFocus={field.autoFocus}
+                    style={{margin: '5px 0'}}
                     disabled={field.disabled}
                     name={field.name}
                     label={field.label}
@@ -162,9 +168,10 @@ const SelectRemote = ({field, onChangeRemote, record}) => {
             renderInput={(params) => (
                 <TextField
                     {...params}
+                    style={{margin: '5px 0'}}
                     fullWidth
                     label={field.label}
-                    variant="standard"
+                    variant={field.variant}
                     InputProps={{
                         ...params.InputProps,
                         endAdornment: (

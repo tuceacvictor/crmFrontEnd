@@ -6,7 +6,7 @@ import {withStyles} from "@material-ui/styles";
 
 const styles = (theme) => ({
     wrapper: {
-        marginTop: 10,
+        marginTop: 30,
         border: '1px solid',
         borderRadius: '10px',
         borderColor: theme.palette.primary.main,
@@ -17,7 +17,7 @@ const styles = (theme) => ({
         marginTop: '-12px',
         padding: '0 10px 0 5px',
         background: 'white',
-        width: 60,
+        width: 230,
     }
 });
 
@@ -28,11 +28,12 @@ class OtherInformationBlock extends Component {
     }
 
     render() {
+        const {values, isAutoComplete} = this.state;
+        const {classes} = this.props;
         return (
-            <div>
+            <div className={classes.wrapper}>
                 <div>
-                    <h4>Дополнительная информация</h4>
-                    <Divider/>
+                    <h4 className={classes.title}>Дополнительная информация</h4>
                 </div>
                 <div>
                     <TextField

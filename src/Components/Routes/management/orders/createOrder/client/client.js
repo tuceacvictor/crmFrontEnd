@@ -1,7 +1,9 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/styles";
-import TextField from "@material-ui/core/TextField";
 import ReactSelect from "../../../../../Utils/form/fields/reactSelectMaterial/reactSelect";
+import Form from "../../../../../Utils/form/form";
+import WhereKnownService from "../../../../../../Services/API/whereType.API";
+import CustomerService from "../../../../../../Services/API/client.API";
 
 const styles = (theme) => ({
     wrapper: {
@@ -41,7 +43,7 @@ class ClientBlock extends Component {
         if(value !== null){
             this.setState({
                 values: {
-                    phone: value.record.phone,
+                    phone: {value: value.record.phone, label: value.record.phone},
                     name: value.record.name,
                     whereKnown_id: value.record.whereKnown_id,
                 },
@@ -54,11 +56,23 @@ class ClientBlock extends Component {
                     name: '',
                     whereKnown_id: '',
                 },
-                isAutoComplete: true
+                isAutoComplete: false
             })
         }
 
     };
+    onChangeRemoteSelect = (value, name) => {
+        const {values} = this.state;
+        values[name] = value;
+        this.setState({values})
+    };
+    onChange = (event) => {
+        const {target: {name, value}} = event;
+        const {values} = this.state;
+        values[name] = value;
+        this.setState({values})
+    };
+
 
 
 
@@ -72,24 +86,32 @@ class ClientBlock extends Component {
                 </div>
                 <div>
                     <ReactSelect
+                        service={CustomerService}
+                        getLabel={'phone'}
+                        getValue={'phone'}
                         label={'Номер Телефона'}
                         onChange={this.onChangeRemote}
                     />
-                    <TextField
-                        disabled={isAutoComplete}
-                        className={classes.field}
-                        value={values.name}
-                        label={'Имя'}
-                        fullWidth
-                        variant={"outlined"}
+                    <Form
+                        onChange={this.onChange}
+                        onChangeRemote={this.onChangeRemote}
+                        schema={
+                            [{label: 'Имя', name: 'name', type: 'string', disabled: isAutoComplete, variant: 'outlined'}]}
+                        record={values}
                     />
-                    <TextField
-                        disabled={isAutoComplete}
-                        className={classes.field}
-                        value={values.whereKnown_id}
-                        label={'Откуда Узнал'}
-                        fullWidth
-                        variant={"outlined"}
+                    <Form
+                        onChange={this.onChange}
+                        onChangeRemote={this.onChangeRemoteSelect}
+                        schema={
+                            [{
+                                label: 'Откуда узнал',
+                                name: 'whereKnown_id',
+                                type: 'selectRemote',
+                                disabled: isAutoComplete,
+                                variant: 'outlined',
+                                service: WhereKnownService
+                            }]}
+                        record={values}
                     />
                 </div>
             </div>

@@ -53,8 +53,8 @@ const defaultAdditional = {
     page: 0
 };
 
-const loadPageOptions = async (q, prevOptions, { page }) => {
-    const { options, hasMore } = await loadOptions(q, page);
+const loadPageOptions = async (q, prevOptions, { page }, service, getLabel, getValue) => {
+    const { options, hasMore } = await loadOptions(q, page, service, getLabel, getValue);
     return {
         options,
         hasMore,
@@ -66,7 +66,7 @@ const loadPageOptions = async (q, prevOptions, { page }) => {
 
 const ReactSelect = (props) => {
     const {classes} = props;
-    const {value, label, onChange} = props;
+    const {value, label, onChange, service, getLabel, getValue} = props;
     const customStyles = {
         indicatorSeparator: () => ({display: 'none'}),
         placeholder: () => ({display: 'none'}),
@@ -88,7 +88,6 @@ const ReactSelect = (props) => {
             padding: 0
         }),
     };
-
     const MenuList = wrapMenuList(Menu);
 
     return (
@@ -102,7 +101,7 @@ const ReactSelect = (props) => {
             placeholder={''}
             styles={customStyles}
             additional={defaultAdditional}
-            loadOptions={loadPageOptions}
+            loadOptions={(q, prevOptions, p) => loadPageOptions(q, prevOptions, p, service, getLabel, getValue)}
             onChange={onChange}
             isClearable
             classes={classes}

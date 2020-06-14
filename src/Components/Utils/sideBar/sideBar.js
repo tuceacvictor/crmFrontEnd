@@ -83,6 +83,14 @@ class SideBar extends Component {
                             {label: "Платежи", url: "/payments", icon: "payment"},
                         ]
                     },
+                    {
+                        label: "Устройства", url: "", icon: "devices", sub: [
+                            {label: "База устройств", url: "/devices", icon: "mobile_friendly"},
+                            {label: "Типы", url: "/deviceType", icon: "group_work"},
+                            {label: "Модели", url: "/deviceModel", icon: "dynamic_feed"},
+                            {label: "Бренды", url: "/deviceBrand", icon: "widgets"},
+                        ]
+                    },
 
                 ],
                 manager: [
