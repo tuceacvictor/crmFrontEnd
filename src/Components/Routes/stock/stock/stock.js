@@ -33,12 +33,12 @@ class Stock extends Component {
                 {title: 'Название', field: 'name'},
                 {title: 'Кол-во', field: 'count'},
                 {title: 'Цена', field: 'price'},
-                {title: 'Категория', field: 'category_id'},
+                {title: 'Категория', field: 'category.name'},
             ],
             formSchema: [
                 {name: 'name', label: "Название", disabled: false, type: 'string', autoFocus: true},
                 {
-                    name: 'category_id',
+                    name: 'categoryId',
                     label: "Категория",
                     disabled: false,
                     type: 'selectRemote',

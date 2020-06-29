@@ -12,15 +12,15 @@ class Device extends Component {
         this.state = {
             columns: [
                 {title: 'Серийный номер', field: 'serial'},
-                {title: 'Бренд', field: 'brand'},
-                {title: 'Модель', field: 'model'},
+                {title: 'Бренд', field: 'brand.name'},
+                {title: 'Модель', field: 'model.name'},
                 {title: 'пин', field: 'password'},
             ],
             formSchema: [
                 {name: 'serial', label: "Серийный номер", disabled: false, type: 'string', autoFocus: true},
                 {name: 'name', label: "Название", disabled: false, type: 'string', autoFocus: false},
                 {
-                    name: 'brand',
+                    name: 'brandId',
                     label: "Бренд",
                     disabled: false,
                     type: 'selectRemote',
@@ -28,7 +28,7 @@ class Device extends Component {
                     service: DeviceBrandService
                 },
                 {
-                    name: 'type',
+                    name: 'typeId',
                     label: "Тип Устройства",
                     disabled: false,
                     type: 'selectRemote',
@@ -36,7 +36,7 @@ class Device extends Component {
                     service: DeviceTypeService
                 },
                 {
-                    name: 'model',
+                    name: 'modelId',
                     label: "Модель",
                     disabled: false,
                     type: 'selectRemote',

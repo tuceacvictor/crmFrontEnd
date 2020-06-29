@@ -32,7 +32,7 @@ class ClientBlock extends Component {
             values: {
                 phone: '',
                 name: '',
-                whereKnown_id: ''
+                whereKnownId: ''
             },
             isAutoComplete: false
         };
@@ -45,7 +45,7 @@ class ClientBlock extends Component {
                 values: {
                     phone: {value: value.record.phone, label: value.record.phone},
                     name: value.record.name,
-                    whereKnown_id: value.record.whereKnown_id,
+                    whereKnownId: value.record.whereKnown,
                 },
                 isAutoComplete: true
             })
@@ -54,7 +54,7 @@ class ClientBlock extends Component {
                 values: {
                     phone: '',
                     name: '',
-                    whereKnown_id: '',
+                    whereKnownId: '',
                 },
                 isAutoComplete: false
             })
@@ -72,9 +72,6 @@ class ClientBlock extends Component {
         values[name] = value;
         this.setState({values})
     };
-
-
-
 
     render() {
         const {classes} = this.props;
@@ -105,7 +102,7 @@ class ClientBlock extends Component {
                         schema={
                             [{
                                 label: 'Откуда узнал',
-                                name: 'whereKnown_id',
+                                name: 'whereKnownId',
                                 type: 'selectRemote',
                                 disabled: isAutoComplete,
                                 variant: 'outlined',

@@ -11,7 +11,7 @@ class Users extends Component {
             columns: [
                 {title: 'Логин', field: 'login'},
                 {title: 'Е-мейл', field: 'email'},
-                {title: 'Роль', field: 'role'},],
+                {title: 'Роль', field: 'role.name'},],
             data: [],
             openAction: false,
             user: {},
@@ -19,19 +19,19 @@ class Users extends Component {
                 {name: 'login', label: "Логин", disabled: false, type: 'string', autoFocus: true},
                 {name: 'email', label: "Email", disabled: false, type: 'string', autoFocus: false},
                 {
-                    name: 'role',
+                    name: 'roleId',
                     label: "Роль",
                     disabled: false,
                     type: 'select',
                     autoFocus: false,
                     options: [
-                        {label: 'Менеджер', value: 'manager'},
-                        {label: 'Админ', value: 'admin'}
+                        {label: 'Менеджер', value: '2'},
+                        {label: 'Админ', value: '1'}
 
                     ]
                 },
                 {
-                    name: 'office',
+                    name: 'officeId',
                     label: "Офисы",
                     disabled: false,
                     type: 'selectRemote',

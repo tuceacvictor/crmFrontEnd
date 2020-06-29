@@ -11,12 +11,12 @@ class Client extends Component {
             columns: [
                 {title: 'Имя', field: 'name'},
                 {title: 'Номер Телефона', field: 'phone'},
-                {title: 'Откуда Узнал', field: 'whereKnown_id'},
+                {title: 'Откуда Узнал', field: 'whereKnown.name'},
             ],
             formSchema: [
                 {name: 'phone', label: "Номер Телефона", type: 'string', disabled: false, autoFocus: true},
                 {name: 'name', label: "Имя", type: 'string', disabled: false, autoFocus: false},
-                {name: 'whereKnown_id',
+                {name: 'whereKnownId',
                     label: "Откуда узнал",
                     disabled: false,
                     type: 'selectRemote',
