@@ -31,7 +31,7 @@ class Users extends Component {
                     ]
                 },
                 {
-                    name: 'officeId',
+                    name: 'offices',
                     label: "Офисы",
                     disabled: false,
                     type: 'selectRemote',
