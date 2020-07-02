@@ -2,6 +2,9 @@ import React, {Component} from "react";
 import Divider from "@material-ui/core/Divider";
 import TextField from "@material-ui/core/TextField/TextField";
 import {withStyles} from "@material-ui/styles";
+import DeviceBrandService from "../../../../../../Services/API/device/device_brand.API";
+import Form from "../../../../../Utils/form/form";
+import UserService from "../../../../../../Services/API/user.API";
 
 
 const styles = (theme) => ({
@@ -24,11 +27,27 @@ const styles = (theme) => ({
 class OtherInformationBlock extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            values: {}
+        };
     }
 
+    onChangeRemoteSelect = (value, name) => {
+        const {setValues} = this.props;
+        const {values} = this.state;
+        values[name] = value;
+        this.setState({values}, () => {setValues(this.state.values, 'otherInformation')})
+    };
+    onChange = (event) => {
+        const {setValues} = this.props;
+        const {target: {name, value}} = event;
+        const {values} = this.state;
+        values[name] = value;
+        this.setState({values}, () => {setValues(this.state.values, 'otherInformation')})
+    };
+
     render() {
-        const {values, isAutoComplete} = this.state;
+        const {values} = this.state;
         const {classes} = this.props;
         return (
             <div className={classes.wrapper}>
@@ -36,36 +55,59 @@ class OtherInformationBlock extends Component {
                     <h4 className={classes.title}>Дополнительная информация</h4>
                 </div>
                 <div>
-                    <TextField
-                        label={'Заметка приемщика'}
-                        fullWidth
+                    <Form
+                        onChange={this.onChange}
+                        onChangeRemote={this.onChangeRemoteSelect}
+                        schema={
+                            [{label: 'Заметка Приемщика', name: 'note', type: 'string', variant: 'outlined'}]}
+                        record={values}
                     />
-                    <TextField
-                        label={'Ориентировочная цена'}
-                        fullWidth
+                    <Form
+                        onChange={this.onChange}
+                        onChangeRemote={this.onChangeRemoteSelect}
+                        schema={
+                            [{
+                                label: 'Ориентировочная цена',
+                                name: 'estimated_price',
+                                type: 'number',
+                                variant: 'outlined'
+                            }]}
+                        record={values}
                     />
-                    <TextField
-                        label={'Срочно'}
-                        fullWidth
+                    <Form
+                        onChange={this.onChange}
+                        onChangeRemote={this.onChangeRemoteSelect}
+                        schema={
+                            [{label: 'Дата Готовности', name: 'ready_date', type: 'date', variant: 'outlined'}]}
+                        record={values}
                     />
-                    <TextField
-                        label={'Дата готовности'}
-                        fullWidth
-                        type={'date'}
+                    <Divider style={{margin: "20px 0"}}/>
+                    <Form
+                        onChange={this.onChange}
+                        onChangeRemote={this.onChangeRemoteSelect}
+                        schema={
+                            [{label: 'Предоплата', name: 'prepayment', type: 'number', variant: 'outlined'}]}
+                        record={values}
                     />
-                    <Divider/>
-                    <TextField
-                        label={'Пердоплата'}
-                        fullWidth
-                        type={"number"}
-                    />
-                    <TextField
-                        label={'Менеджер'}
-                        fullWidth
+                    <Form
+                        onChange={this.onChange}
+                        onChangeRemote={this.onChangeRemoteSelect}
+                        schema={
+                            [{label: 'Менеджер', name: 'manager', type: 'selectRemote', service: UserService, variant: 'outlined'}]}
+
+                        record={values}
                     />
                     <TextField
                         label={'Исполнитель'}
+                        variant={"outlined"}
                         fullWidth
+                    />
+                    <Form
+                        onChange={this.onChange}
+                        onChangeRemote={this.onChangeRemoteSelect}
+                        schema={
+                            [{label: 'Срочно', name: 'urgently', type: 'checkbox', variant: 'outlined'}]}
+                        record={values}
                     />
                 </div>
             </div>

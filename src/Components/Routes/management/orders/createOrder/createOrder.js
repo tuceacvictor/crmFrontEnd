@@ -20,17 +20,17 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
 });
 
-const DialogAppBar = ({classes, toggleCreate}) => {
+const DialogAppBar = ({classes, toggleCreate, createOrder}) => {
     return (
         <AppBar className={classes.appBar}>
             <Toolbar>
                 <IconButton edge="start" color="inherit" onClick={toggleCreate} aria-label="close">
                     <CloseIcon/>
                 </IconButton>
-                <Typography variant="h6" className={classes.title}>
+                <Typography variant="h6" className={classes.title} >
                     Создать Заказ
                 </Typography>
-                <Button autoFocus color="inherit" onClick={toggleCreate}>
+                <Button autoFocus color="inherit" onClick={createOrder}>
                     Сохранить
                 </Button>
             </Toolbar>
@@ -49,6 +49,31 @@ const styles = (theme) => ({
 });
 
 class CreateOrder extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            values: {
+                client: {},
+                device: {},
+                otherInformation: {},
+            },
+        }
+    }
+    setValues = (value, blockType) => {
+        const {values} = this.state;
+        values[blockType] = {...value};
+        this.setState({values})
+    };
+    shouldComponentUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
+        return this.state.values !== nextState.values;
+    }
+
+    createOrder = () => {
+        const {values} = this.state;
+        console.log(values)
+    };
+
+
     render() {
         const {classes, open, toggleCreate} = this.props;
         return (
@@ -61,11 +86,11 @@ class CreateOrder extends Component {
                     fullWidth
                     TransitionComponent={Transition}
                 >
-                    <DialogAppBar classes={classes} toggleCreate={toggleCreate}/>
+                    <DialogAppBar classes={classes} toggleCreate={toggleCreate} createOrder={this.createOrder}/>
                     <DialogContent>
-                        <ClientBlock/>
-                        <DeviceBlock/>
-                        <OtherInformationBlock/>
+                        <ClientBlock setValues={this.setValues}/>
+                        <DeviceBlock setValues={this.setValues}/>
+                        <OtherInformationBlock setValues={this.setValues}/>
                     </DialogContent>
                 </Dialog>
             </div>

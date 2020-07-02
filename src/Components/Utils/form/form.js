@@ -5,6 +5,8 @@ import {TextField} from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import MenuItem from "@material-ui/core/MenuItem";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 const Form = ({schema, onChange, record, onChangeRemote}) => {
     return (
@@ -64,6 +66,9 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
                     name={field.name}
                     label={field.label}
                     value={record[field.name] || ''}
+                    InputLabelProps={{
+                        shrink: true
+                    }}
                     type={"date"}
                     required={field.required}
                     onChange={onChange}
@@ -106,6 +111,19 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
 
                 </TextField>
             </FormControl>;
+        case 'checkbox':
+            return <FormControlLabel
+                labelPlacement={"start"}
+                control={
+                    <Checkbox
+                        checked={record[field.name]}
+                        onChange={onChange}
+                        name={field.name}
+                        color={field.color || 'primary'}
+                    />
+                }
+                label={field.label}
+            />
         case 'selectRemote':
             return <SelectRemote field={field} onChangeRemote={onChangeRemote} record={record}/>;
         default:

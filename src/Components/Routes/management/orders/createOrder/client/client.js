@@ -40,6 +40,7 @@ class ClientBlock extends Component {
 
 
     onChangeRemote = (value) => {
+        const {setValues} = this.props;
         if(value !== null){
             this.setState({
                 values: {
@@ -48,6 +49,8 @@ class ClientBlock extends Component {
                     whereKnownId: value.record.whereKnown,
                 },
                 isAutoComplete: true
+            }, () => {
+                setValues(this.state.values, 'client')
             })
         }else{
             this.setState({
@@ -57,20 +60,24 @@ class ClientBlock extends Component {
                     whereKnownId: '',
                 },
                 isAutoComplete: false
+            }, () => {
+                setValues(this.state.values, 'client')
             })
         }
 
     };
     onChangeRemoteSelect = (value, name) => {
+        const {setValues} = this.props;
         const {values} = this.state;
         values[name] = value;
-        this.setState({values})
+        this.setState({values}, ()  => {setValues(this.state.values, 'client')})
     };
     onChange = (event) => {
+        const {setValues} = this.props;
         const {target: {name, value}} = event;
         const {values} = this.state;
         values[name] = value;
-        this.setState({values})
+        this.setState({values}, () => {setValues(this.state.values, 'client')})
     };
 
     render() {

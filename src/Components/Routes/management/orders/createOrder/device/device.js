@@ -38,13 +38,14 @@ class DeviceBlock extends Component {
     }
 
     onChangeRemote = (value) => {
+        const {setValues} = this.props;
         if(value !== null){
             this.setState({
                 values: {
                     serial: {value: value.record.serial, label: value.record.serial},
-                    device_brand: {value: value.record.brand, label: value.record.brand},
-                    device_type: {value: value.record.type, label: value.record.type},
-                    device_model: {value: value.record.model, label: value.record.model},
+                    device_brand: value.record.brand,
+                    device_type: value.record.type,
+                    device_model: value.record.model,
                 },
                 isAutoComplete: true
             })
@@ -56,20 +57,22 @@ class DeviceBlock extends Component {
                     device_model: '',
                 },
                 isAutoComplete: false
-            })
+            }, () => {setValues(this.state.values, 'device')})
         }
 
     };
     onChangeRemoteSelect = (value, name) => {
+        const {setValues} = this.props;
         const {values} = this.state;
         values[name] = value;
-        this.setState({values})
+        this.setState({values}, () => {setValues(this.state.values, 'device')})
     };
     onChange = (event) => {
+        const {setValues} = this.props;
         const {target: {name, value}} = event;
         const {values} = this.state;
         values[name] = value;
-        this.setState({values})
+        this.setState({values}, () => {setValues(this.state.values, 'device')})
     };
 
     render() {
