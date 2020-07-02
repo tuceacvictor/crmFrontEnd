@@ -27,7 +27,7 @@ class SideBarHeader extends Component {
 
     componentDidMount() {
         const {currentUser: {user: {defaultOffice, offices = []}}, setOffice} = this.props;
-        let currentOffice = defaultOffice ? defaultOffice.id : offices.length > 0 ? offices[0].id : null;
+        let currentOffice = defaultOffice ? defaultOffice : offices.length > 0 ? offices[0].id : null;
         this.setState({defaultOffice: currentOffice, offices: offices});
         setOffice(currentOffice)
     };
