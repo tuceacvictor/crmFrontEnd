@@ -36,14 +36,14 @@ class OtherInformationBlock extends Component {
         const {setValues} = this.props;
         const {values} = this.state;
         values[name] = value;
-        this.setState({values}, () => {setValues(this.state.values, 'otherInformation')})
+        this.setState({values}, () => {setValues(values, 'otherInformation')})
     };
-    onChange = (event) => {
+    onChange = (event, isCheckbox) => {
         const {setValues} = this.props;
-        const {target: {name, value}} = event;
+        const {target: {name, value, checked}} = event;
         const {values} = this.state;
-        values[name] = value;
-        this.setState({values}, () => {setValues(this.state.values, 'otherInformation')})
+        values[name] = isCheckbox ? checked : value;
+        this.setState({values}, () => {setValues(values, 'otherInformation')})
     };
 
     render() {

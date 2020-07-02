@@ -118,7 +118,7 @@ class Header extends Component {
                         </Typography>
                         {auth && (
                             <div>
-                                <Tooltip title={currentUser.user.login}>
+                                <Tooltip title={currentUser.user.login || ""}>
                                 <IconButton
                                     aria-label="account of current user"
                                     aria-controls="menu-appbar"

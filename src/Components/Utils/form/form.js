@@ -13,6 +13,7 @@ const Form = ({schema, onChange, record, onChangeRemote}) => {
         schema.map(field => {
             return (
                 <Field
+                    key={field.name}
                     field={field}
                     record={record}
                     onChange={onChange}
@@ -116,8 +117,8 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
                 labelPlacement={"start"}
                 control={
                     <Checkbox
-                        checked={record[field.name]}
-                        onChange={onChange}
+                        checked={record[field.name] || false}
+                        onChange={(event) => onChange(event, true)}
                         name={field.name}
                         color={field.color || 'primary'}
                     />
@@ -146,7 +147,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
 
 const SelectRemote = ({field, onChangeRemote, record}) => {
     const [open, setOpen] = React.useState(false);
-    const [options, setOptions] = React.useState([]);
+    const [options, setOptions] = React.useState([{name: "", value: ""}]);
     const loading = open && options.length === 0;
     React.useEffect(() => {
         let active = true;
@@ -182,7 +183,7 @@ const SelectRemote = ({field, onChangeRemote, record}) => {
             getOptionLabel={(option) => option.name}
             options={options || [{}]}
             loading={loading}
-            value={record[field.name] || []}
+            value={record[field.name] || {value: "", name: ""}}
             renderInput={(params) => (
                 <TextField
                     {...params}

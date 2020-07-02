@@ -41,18 +41,24 @@ class ClientBlock extends Component {
 
     onChangeRemote = (value) => {
         const {setValues} = this.props;
-        if(value !== null){
+        console.log(value)
+        if(value !== null && !value.__isNew__){
             this.setState({
                 values: {
                     phone: {value: value.record.phone, label: value.record.phone},
                     name: value.record.name,
                     whereKnownId: value.record.whereKnown,
+                    __isNew: false
                 },
                 isAutoComplete: true
             }, () => {
                 setValues(this.state.values, 'client')
             })
-        }else{
+        }else if(value.__isNew__) {
+            this.setState({
+                values: {phone: {value: value.value, label: value.value}, __isNew: true}
+            })
+        } else{
             this.setState({
                 values: {
                     phone: '',

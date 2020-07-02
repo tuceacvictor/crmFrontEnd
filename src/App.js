@@ -32,6 +32,7 @@ import Device from "./Components/Routes/device/device/device";
 import Device_brand from "./Components/Routes/device/device_brand/device_brand";
 import Device_type from "./Components/Routes/device/device_type/device_type";
 import Device_model from "./Components/Routes/device/device_model/device_model";
+import Executors from "./Components/Routes/admin/executors/executors";
 
 const styles = (theme) => ({
     root: {
@@ -217,6 +218,7 @@ class App extends Component {
                                             <PrivateRoute exact path={"/"} component={Home}/>
                                             <PrivateRoute exact path={"/customers"} component={Customers}/>
                                             <PrivateRoute exact path={"/users"} component={Users}/>
+                                            <PrivateRoute exact path={"/executors"} component={Executors}/>
                                             <PrivateRoute exact path={"/offices"} component={Offices}/>
                                             <PrivateRoute exact path={"/orders"} component={Orders} />
                                             <PrivateRoute exact path={"/stock"} component={Stock} />

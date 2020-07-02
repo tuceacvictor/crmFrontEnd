@@ -9,12 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from "@material-ui/core/Button";
 import withStyles from "@material-ui/core/styles/withStyles";
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import {useTheme} from '@material-ui/core/styles';
 import ClientBlock from "./client";
 import DialogContent from "@material-ui/core/DialogContent";
 import DeviceBlock from "./device/device";
 import OtherInformationBlock from "./otherInformation/otherInformation";
+import {set} from 'object-path-immutable';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
@@ -61,11 +60,11 @@ class CreateOrder extends Component {
     }
     setValues = (value, blockType) => {
         const {values} = this.state;
-        values[blockType] = {...value};
-        this.setState({values})
+        let newValues = set(values, blockType, value);
+        this.setState({values: newValues})
     };
-    shouldComponentUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
-        return this.state.values !== nextState.values;
+    shouldComponentUpdate(nextProps, nextState, nextContext){
+        return this.state.values === nextState.values;
     }
 
     createOrder = () => {

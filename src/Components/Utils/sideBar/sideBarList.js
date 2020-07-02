@@ -16,7 +16,7 @@ export const SideBarList = ({menu, expandedMenu, expandMenuItem, toggleDrawer, l
                 <React.Fragment key={index}>
                     {item.sub ? (
                         <>
-                            <ListItem button onClick={() => expandMenuItem(item.label)}>
+                            <ListItem button onClick={() => expandMenuItem(item.label, index)}>
                                 <ListItemIcon style={{marginLeft: 7}}>
                                     <Icon>
                                         {item.icon}
@@ -25,7 +25,7 @@ export const SideBarList = ({menu, expandedMenu, expandMenuItem, toggleDrawer, l
                                 <ListItemText primary={item.label}/>
                                 {expandedMenu === item.label ? <ExpandLess/> : <ExpandMore/>}
                             </ListItem>
-                            <Collapse in={expandedMenu === item.label} timeout="auto" unmountOnExit>
+                            <Collapse in={item.expanded} timeout="auto" unmountOnExit>
                                 <List component="div" disablePadding>
                                     <SideBarList expandedMenu={expandedMenu} expandMenuItem={expandMenuItem}
                                                  level={1}
@@ -45,7 +45,7 @@ export const SideBarList = ({menu, expandedMenu, expandMenuItem, toggleDrawer, l
 
 SideBarList.propTypes = {
     menu: PropTypes.array.isRequired,
-    expandedMenu: PropTypes.string.isRequired,
-    expandMenuItem: PropTypes.func.isRequired,
+    expandedMenu: PropTypes.string,
+    expandMenuItem: PropTypes.func,
     toggleDrawer: PropTypes.func
 };

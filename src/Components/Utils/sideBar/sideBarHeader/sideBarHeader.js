@@ -47,7 +47,6 @@ class SideBarHeader extends Component {
                     <InputLabel>Офис</InputLabel>
                     <Select
                         value={defaultOffice || 0}
-                        disableUnderline={true}
                         onChange={this.onChange}
                     >
                         {offices.map(office => {

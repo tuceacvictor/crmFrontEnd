@@ -10,6 +10,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import {SideBarList} from "./sideBarList";
 import {Hidden, SwipeableDrawer} from "@material-ui/core";
 import SideBarHeader from "./sideBarHeader";
+import {set, get} from 'object-path-immutable'
 
 const drawerWidth = 240;
 
@@ -62,21 +63,22 @@ class SideBar extends Component {
                 admin: [
                     {label: "Главная", url: "/", icon: "home"},
                     {
-                        label: "Админ", url: "", icon: "build", sub: [
+                        label: "Админ", url: "", icon: "build", expanded: false, sub: [
                             {label: "Пользователи", url: "/users", icon: "supervised_user_circle"},
+                            {label: "Исполнители", url: "/executors", icon: "supervised_user_circle"},
                             {label: "Офисы", url: "/offices", icon: "business"},
                             {label: "Откуда Узнали", url: "/whereKnown", icon: "business"},
                         ]
                     },
                     {
-                        label: "Склад", url: "", icon: "layers", sub: [
+                        label: "Склад", url: "", icon: "layers", expanded: false, sub: [
                             {label: "Склад Запчастей", url: "/stock", icon: "supervised_user_circle"},
                             {label: "Брак", url: "/defectStock", icon: "business"},
                             {label: "Категории", url: "/category", icon: "business"},
                         ]
                     },
                     {
-                        label: "Менеджмент", url: "", icon: "dynamic_feed", sub: [
+                        label: "Менеджмент", url: "", icon: "dynamic_feed", expanded: false, sub: [
                             {label: "Заказы", url: "/orders", icon: "shopping_cart"},
                             {label: "Клиенты", url: "/clients", icon: "shopping_cart"},
                             {label: "База Клиентов", url: "/customers", icon: "accessibility"},
@@ -84,7 +86,7 @@ class SideBar extends Component {
                         ]
                     },
                     {
-                        label: "Устройства", url: "", icon: "devices", sub: [
+                        label: "Устройства", url: "", icon: "devices", expanded: false, sub: [
                             {label: "База устройств", url: "/devices", icon: "mobile_friendly"},
                             {label: "Типы", url: "/deviceType", icon: "group_work"},
                             {label: "Модели", url: "/deviceModel", icon: "dynamic_feed"},
@@ -96,7 +98,7 @@ class SideBar extends Component {
                 manager: [
                     {label: "Главная", url: "/", icon: "home"},
                     {
-                        label: "Менеджмент", url: "", icon: "dynamic_feed", sub: [
+                        label: "Менеджмент", url: "", icon: "dynamic_feed", expanded: false, sub: [
                             {label: "Заказы", url: "/orders", icon: "shopping_cart"},
                             {label: "База Клиентов", url: "/customers", icon: "accessibility"},
                             {label: "Платежи", url: "/payments", icon: "payment"},
@@ -107,10 +109,14 @@ class SideBar extends Component {
         }
     }
 
-    expandMenuItem = (url) => {
-        this.setState((state) => ({
-            expandedMenu: state.expandedMenu ? undefined : url
-        }))
+    expandMenuItem = (url, index) => {
+        const {menu} = this.state;
+        const {currentUser: {user}} = this.props;
+        const userRole = user.role === 'admin' ? 'admin' : 'manager';
+        const menuPath = `${userRole}.${index}.expanded`;
+        let isExpanded = get(menu, menuPath);
+        const newValues = set(menu, menuPath, !isExpanded);
+        this.setState({menu: newValues})
     };
 
     desktopDrawer = () => {

@@ -39,16 +39,19 @@ class DeviceBlock extends Component {
 
     onChangeRemote = (value) => {
         const {setValues} = this.props;
-        if(value !== null){
+        if(value !== null && !value.__isNew__){
             this.setState({
                 values: {
                     serial: {value: value.record.serial, label: value.record.serial},
                     device_brand: value.record.brand,
                     device_type: value.record.type,
                     device_model: value.record.model,
+                    __isNew: false,
                 },
                 isAutoComplete: true
             })
+        }else if(value.__isNew__){
+            this.setState({values: {serial: {value: value.value, label: value.value}, __isNew: true,}})
         }else{
             this.setState({
                 values: {
