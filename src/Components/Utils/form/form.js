@@ -124,7 +124,7 @@ const Field = ({field, record, onChange, onChangeRemote}) => {
                     />
                 }
                 label={field.label}
-            />
+            />;
         case 'selectRemote':
             return <SelectRemote field={field} onChangeRemote={onChangeRemote} record={record}/>;
         default:
@@ -183,7 +183,7 @@ const SelectRemote = ({field, onChangeRemote, record}) => {
             getOptionLabel={(option) => option.name}
             options={options || [{}]}
             loading={loading}
-            value={record[field.name] || {value: "", name: ""}}
+            value={record[field.name] || []}
             renderInput={(params) => (
                 <TextField
                     {...params}
