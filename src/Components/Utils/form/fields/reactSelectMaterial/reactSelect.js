@@ -13,6 +13,7 @@ import {
     Placeholder
 } from './components';
 import {withStyles} from "@material-ui/styles";
+import login from "../../../../Routes/login/login";
 
 const styles = () => ({
     textField: {
@@ -66,7 +67,7 @@ const loadPageOptions = async (q, prevOptions, { page }, service, getLabel, getV
 
 const ReactSelect = (props) => {
     const {classes} = props;
-    const {value, label, onChange, service, getLabel, getValue} = props;
+    const {value, label, onChange, service, getLabel, getValue, name} = props;
     const customStyles = {
         indicatorSeparator: () => ({display: 'none'}),
         placeholder: () => ({display: 'none'}),
@@ -102,7 +103,7 @@ const ReactSelect = (props) => {
             styles={customStyles}
             additional={defaultAdditional}
             loadOptions={(q, prevOptions, p) => loadPageOptions(q, prevOptions, p, service, getLabel, getValue)}
-            onChange={onChange}
+            onChange={(value) => onChange(value, name)}
             isClearable
             classes={classes}
             components={{
