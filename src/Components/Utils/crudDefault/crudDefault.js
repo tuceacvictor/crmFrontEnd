@@ -64,6 +64,13 @@ class CrudDefault extends Component {
                                         totalCount: response.count
                                     })
                                 })
+                                .catch(() => {
+                                    resolve({
+                                        data:[],
+                                        page: 0,
+                                        totalCount: 0
+                                    })
+                                })
                         })
                     }
 
