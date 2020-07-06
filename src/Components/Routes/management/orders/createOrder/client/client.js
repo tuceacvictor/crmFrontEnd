@@ -41,7 +41,6 @@ class ClientBlock extends Component {
 
     onChangeRemote = (value) => {
         const {setValues} = this.props;
-        console.log(value)
         if(value !== null && !value.__isNew__){
             this.setState({
                 values: {
@@ -70,7 +69,6 @@ class ClientBlock extends Component {
                 setValues(this.state.values, 'client')
             })
         }
-
     };
     onChangeRemoteSelect = (value, name) => {
         const {setValues} = this.props;
@@ -101,6 +99,7 @@ class ClientBlock extends Component {
                         getValue={'phone'}
                         label={'Номер Телефона'}
                         onChange={this.onChangeRemote}
+
                     />
                     <Form
                         onChange={this.onChange}

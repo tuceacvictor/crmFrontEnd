@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import Divider from "@material-ui/core/Divider";
-import TextField from "@material-ui/core/TextField/TextField";
 import {withStyles} from "@material-ui/styles";
-import DeviceBrandService from "../../../../../../Services/API/device/device_brand.API";
 import Form from "../../../../../Utils/form/form";
 import UserService from "../../../../../../Services/API/user.API";
+import ReactSelect from "../../../../../Utils/form/fields/reactSelectMaterial/reactSelect";
+import ExecutorService from "../../../../../../Services/API/executor.API";
 
 
 const styles = (theme) => ({
@@ -32,18 +32,42 @@ class OtherInformationBlock extends Component {
         };
     }
 
+    onChangeRemote = (value, name) => {
+        const {values} = this.state;
+        const {setValues} = this.props;
+        if (value !== null) {
+            values[name] = value;
+            this.setState({
+                values,
+            }, () => {
+                setValues(values, 'otherInformation')
+            })
+        } else {
+            values[name] = '';
+            this.setState({
+                    values
+                },
+                () => {
+                    setValues(values, 'otherInformation')
+                })
+        }
+    };
     onChangeRemoteSelect = (value, name) => {
         const {setValues} = this.props;
         const {values} = this.state;
         values[name] = value;
-        this.setState({values}, () => {setValues(values, 'otherInformation')})
+        this.setState({values}, () => {
+            setValues(values, 'otherInformation')
+        })
     };
     onChange = (event, isCheckbox) => {
         const {setValues} = this.props;
         const {target: {name, value, checked}} = event;
         const {values} = this.state;
         values[name] = isCheckbox ? checked : value;
-        this.setState({values}, () => {setValues(values, 'otherInformation')})
+        this.setState({values}, () => {
+            setValues(values, 'otherInformation')
+        })
     };
 
     render() {
@@ -89,18 +113,23 @@ class OtherInformationBlock extends Component {
                             [{label: 'Предоплата', name: 'prepayment', type: 'number', variant: 'outlined'}]}
                         record={values}
                     />
-                    <Form
-                        onChange={this.onChange}
-                        onChangeRemote={this.onChangeRemoteSelect}
-                        schema={
-                            [{label: 'Менеджер', name: 'manager', type: 'selectRemote', service: UserService, variant: 'outlined'}]}
-
-                        record={values}
+                    <ReactSelect
+                        service={UserService}
+                        value={values.manager}
+                        name={'manager'}
+                        getLabel={'login'}
+                        getValue={'id'}
+                        label={'Менеджер'}
+                        onChange={this.onChangeRemote}
                     />
-                    <TextField
+                    <ReactSelect
+                        service={ExecutorService}
+                        value={values.executor}
+                        name={'executor'}
+                        getLabel={'name'}
+                        getValue={'id'}
                         label={'Исполнитель'}
-                        variant={"outlined"}
-                        fullWidth
+                        onChange={this.onChangeRemote}
                     />
                     <Form
                         onChange={this.onChange}

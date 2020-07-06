@@ -14,6 +14,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DeviceBlock from "./device/device";
 import OtherInformationBlock from "./otherInformation/otherInformation";
 import {set} from 'object-path-immutable';
+import {prepareDataToCreate} from "./utils/prepareDataToCreate";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
@@ -68,10 +69,10 @@ class CreateOrder extends Component {
     }
 
     createOrder = () => {
-        const {values} = this.state;
-        console.log(values)
+        const {values: {client, device, otherInformation}} = this.state;
+        const preparedData = prepareDataToCreate(client, device, otherInformation);
+        //TODO WAITING FOR READY BACKEND
     };
-
 
     render() {
         const {classes, open, toggleCreate} = this.props;
