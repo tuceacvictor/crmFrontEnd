@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 
 import AsyncPaginate, { wrapMenuList } from "react-select-async-paginate";
 import Creatable from "react-select/creatable";
@@ -13,7 +13,6 @@ import {
     Placeholder
 } from './components';
 import {withStyles} from "@material-ui/styles";
-import login from "../../../../Routes/login/login";
 
 const styles = () => ({
     textField: {
