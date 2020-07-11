@@ -65,23 +65,23 @@ class SideBar extends Component {
                     {
                         label: "Админ", url: "", icon: "build", expanded: false, sub: [
                             {label: "Пользователи", url: "/users", icon: "supervised_user_circle"},
-                            {label: "Исполнители", url: "/executors", icon: "supervised_user_circle"},
+                            {label: "Исполнители", url: "/executors", icon: "power"},
                             {label: "Офисы", url: "/offices", icon: "business"},
-                            {label: "Откуда Узнали", url: "/whereKnown", icon: "business"},
+                            {label: "Откуда Узнали", url: "/whereKnown", icon: "place"},
                         ]
                     },
                     {
                         label: "Склад", url: "", icon: "layers", expanded: false, sub: [
-                            {label: "Склад Запчастей", url: "/stock", icon: "supervised_user_circle"},
-                            {label: "Брак", url: "/defectStock", icon: "business"},
-                            {label: "Категории", url: "/category", icon: "business"},
+                            {label: "Склад Запчастей", url: "/stock", icon: "list_alt"},
+                            {label: "Брак", url: "/defectStock", icon: "do_not_touch"},
+                            {label: "Категории", url: "/category", icon: "qr_code"},
                         ]
                     },
                     {
                         label: "Менеджмент", url: "", icon: "dynamic_feed", expanded: false, sub: [
                             {label: "Заказы", url: "/orders", icon: "shopping_cart"},
-                            {label: "Клиенты", url: "/clients", icon: "shopping_cart"},
-                            {label: "База Клиентов", url: "/customers", icon: "accessibility"},
+                            {label: "Клиенты", url: "/clients", icon: "perm_identity"},
+                            // {label: "База Клиентов", url: "/customers", icon: "accessibility"},
                             {label: "Платежи", url: "/payments", icon: "payment"},
                         ]
                     },
