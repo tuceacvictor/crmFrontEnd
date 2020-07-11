@@ -43,9 +43,9 @@ class DeviceBlock extends Component {
             this.setState({
                 values: {
                     serial: {value: value.record.serial, label: value.record.serial},
-                    device_brand: value.record.brand,
-                    device_type: value.record.type,
-                    device_model: value.record.model,
+                    brand: value.record.brand,
+                    type: value.record.type,
+                    model: value.record.model,
                     __isNew: false,
                 },
                 isAutoComplete: true
@@ -55,9 +55,9 @@ class DeviceBlock extends Component {
         }else{
             this.setState({
                 values: {
-                    device_brand: '',
-                    device_type: '',
-                    device_model: '',
+                    brand: '',
+                    type: '',
+                    model: '',
                 },
                 isAutoComplete: false
             }, () => {setValues(this.state.values, 'device')})
@@ -100,7 +100,7 @@ class DeviceBlock extends Component {
                         schema={
                             [{
                                 label: 'Бренд',
-                                name: 'device_brand',
+                                name: 'brand',
                                 type: 'selectRemote',
                                 disabled: isAutoComplete,
                                 variant: 'outlined',
@@ -114,7 +114,7 @@ class DeviceBlock extends Component {
                         schema={
                             [{
                                 label: 'Модель',
-                                name: 'device_model',
+                                name: 'model',
                                 type: 'selectRemote',
                                 disabled: isAutoComplete,
                                 variant: 'outlined',
@@ -128,7 +128,7 @@ class DeviceBlock extends Component {
                         schema={
                             [{
                                 label: 'Тип Устройства',
-                                name: 'device_type',
+                                name: 'type',
                                 type: 'selectRemote',
                                 disabled: isAutoComplete,
                                 variant: 'outlined',
@@ -161,7 +161,7 @@ class DeviceBlock extends Component {
                         onChange={this.onChange}
                         onChangeRemote={this.onChangeRemote}
                         schema={
-                            [{label: 'Неисправность', name: 'problem_device', type: 'string', variant: 'outlined'}]}
+                            [{label: 'Неисправность', name: 'problem', type: 'string', variant: 'outlined'}]}
                         record={values}
                     />
                 </div>

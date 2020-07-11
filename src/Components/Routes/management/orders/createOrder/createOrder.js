@@ -15,6 +15,9 @@ import DeviceBlock from "./device/device";
 import OtherInformationBlock from "./otherInformation/otherInformation";
 import {set} from 'object-path-immutable';
 import {prepareDataToCreate} from "./utils/prepareDataToCreate";
+import OrderService from "../../../../../Services/API/order.API";
+import getSafe from "../../../../../Helpers/getSafeValue";
+import {withSnackbar} from "notistack";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="left" ref={ref} {...props} />;
@@ -70,7 +73,20 @@ class CreateOrder extends Component {
 
     createOrder = () => {
         const {values: {client, device, otherInformation}} = this.state;
+        const {enqueueSnackbar} = this.props;
         const preparedData = prepareDataToCreate(client, device, otherInformation);
+        console.log(preparedData);
+        OrderService
+            .create(preparedData)
+            .then(res => {
+                console.log(res)
+                enqueueSnackbar("Заказ успешно создан", {variant: 'success'});
+            })
+            .catch(err => {
+                enqueueSnackbar(
+                    getSafe(() => err.data.message, 'Произошла неизвестная ошибка!'),
+                    {variant: 'error'});
+            })
         //TODO WAITING FOR READY BACKEND
     };
 
@@ -103,4 +119,4 @@ CreateOrder.propTypes = {
     toggleCreate: PropTypes.func.isRequired
 };
 
-export default withStyles(styles)(CreateOrder);
+export default withSnackbar(withStyles(styles)(CreateOrder));
