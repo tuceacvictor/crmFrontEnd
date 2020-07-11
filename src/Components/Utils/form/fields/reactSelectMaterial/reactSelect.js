@@ -66,7 +66,7 @@ const loadPageOptions = async (q, prevOptions, { page }, service, getLabel, getV
 
 const ReactSelect = (props) => {
     const {classes} = props;
-    const {value, label, onChange, service, getLabel, getValue, name} = props;
+    const {record = {}, label, onChange, service, getLabel, getValue, name} = props;
     const customStyles = {
         indicatorSeparator: () => ({display: 'none'}),
         placeholder: () => ({display: 'none'}),
@@ -94,7 +94,7 @@ const ReactSelect = (props) => {
         <AsyncPaginate
             SelectComponent={Creatable}
             className={classes.textField}
-            value={value}
+            value={record[name] || {label: "", value: ""}}
             fullWidth={true}
             variant={'outlined'}
             label={label}

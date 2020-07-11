@@ -115,7 +115,7 @@ class OtherInformationBlock extends Component {
                     />
                     <ReactSelect
                         service={UserService}
-                        value={values.manager}
+                        record={values}
                         name={'manager'}
                         getLabel={'login'}
                         getValue={'id'}
@@ -124,7 +124,7 @@ class OtherInformationBlock extends Component {
                     />
                     <ReactSelect
                         service={ExecutorService}
-                        value={values.executor}
+                        record={values}
                         name={'executor'}
                         getLabel={'name'}
                         getValue={'id'}

@@ -41,7 +41,7 @@ class ClientBlock extends Component {
 
     onChangeRemote = (value) => {
         const {setValues} = this.props;
-        if(value !== null && !value.__isNew__){
+        if (value !== null && !value.__isNew__) {
             this.setState({
                 values: {
                     phone: {value: value.record.phone, label: value.record.phone},
@@ -53,11 +53,11 @@ class ClientBlock extends Component {
             }, () => {
                 setValues(this.state.values, 'client')
             })
-        }else if(value.__isNew__) {
+        } else if (value.__isNew__) {
             this.setState({
                 values: {phone: {value: value.value, label: value.value}, __isNew: true}
             })
-        } else{
+        } else {
             this.setState({
                 values: {
                     phone: '',
@@ -74,14 +74,18 @@ class ClientBlock extends Component {
         const {setValues} = this.props;
         const {values} = this.state;
         values[name] = value;
-        this.setState({values}, ()  => {setValues(this.state.values, 'client')})
+        this.setState({values}, () => {
+            setValues(this.state.values, 'client')
+        })
     };
     onChange = (event) => {
         const {setValues} = this.props;
         const {target: {name, value}} = event;
         const {values} = this.state;
         values[name] = value;
-        this.setState({values}, () => {setValues(this.state.values, 'client')})
+        this.setState({values}, () => {
+            setValues(this.state.values, 'client')
+        })
     };
 
     render() {
@@ -95,9 +99,11 @@ class ClientBlock extends Component {
                 <div>
                     <ReactSelect
                         service={CustomerService}
+                        name={'phone'}
                         getLabel={'phone'}
                         getValue={'phone'}
                         label={'Номер Телефона'}
+                        record={values}
                         onChange={this.onChangeRemote}
 
                     />
@@ -105,7 +111,14 @@ class ClientBlock extends Component {
                         onChange={this.onChange}
                         onChangeRemote={this.onChangeRemote}
                         schema={
-                            [{label: 'Имя', name: 'name', type: 'string', disabled: isAutoComplete, variant: 'outlined'}]}
+                            [{
+                                label: 'Имя',
+                                name: 'name',
+                                type: 'string',
+                                disabled: isAutoComplete,
+                                variant: 'outlined',
+                                required: true
+                            }]}
                         record={values}
                     />
                     <Form
@@ -118,7 +131,8 @@ class ClientBlock extends Component {
                                 type: 'selectRemote',
                                 disabled: isAutoComplete,
                                 variant: 'outlined',
-                                service: WhereKnownService
+                                service: WhereKnownService,
+                                required: true
                             }]}
                         record={values}
                     />

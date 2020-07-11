@@ -25,6 +25,7 @@ export const Control = (props) => {
                 error={props.selectProps.error}
                 type={'string'}
                 InputLabelProps={{
+                    shrink: true,
                     style: {backgroundColor: '#fff'}
                 }}
                 InputProps={{

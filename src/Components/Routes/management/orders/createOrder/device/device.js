@@ -50,7 +50,7 @@ class DeviceBlock extends Component {
                 },
                 isAutoComplete: true
             })
-        }else if(value.__isNew__){
+        }else if(value && value.__isNew__){
             this.setState({values: {serial: {value: value.value, label: value.value}, __isNew: true,}})
         }else{
             this.setState({
@@ -90,6 +90,8 @@ class DeviceBlock extends Component {
                     <ReactSelect
                         service={DeviceService}
                         getLabel={'serial'}
+                        name={'serial'}
+                        record={values}
                         getValue={'phone'}
                         label={'Серийный номер / IMEI'}
                         onChange={this.onChangeRemote}
@@ -104,7 +106,8 @@ class DeviceBlock extends Component {
                                 type: 'selectRemote',
                                 disabled: isAutoComplete,
                                 variant: 'outlined',
-                                service: DeviceBrandService
+                                service: DeviceBrandService,
+                                required: true
                             }]}
                         record={values}
                     />
@@ -118,7 +121,8 @@ class DeviceBlock extends Component {
                                 type: 'selectRemote',
                                 disabled: isAutoComplete,
                                 variant: 'outlined',
-                                service: DeviceModelService
+                                service: DeviceModelService,
+                                required: true
                             }]}
                         record={values}
                     />
@@ -132,7 +136,8 @@ class DeviceBlock extends Component {
                                 type: 'selectRemote',
                                 disabled: isAutoComplete,
                                 variant: 'outlined',
-                                service: DeviceTypeService
+                                service: DeviceTypeService,
+                                required: true
                             }]}
                         record={values}
                     />
@@ -140,7 +145,7 @@ class DeviceBlock extends Component {
                         onChange={this.onChange}
                         onChangeRemote={this.onChangeRemote}
                         schema={
-                            [{label: 'Пароль', name: 'password', type: 'string', variant: 'outlined'}]}
+                            [{label: 'Пароль', name: 'password', type: 'string', variant: 'outlined', required: true}]}
                         record={values}
                     />
                     <Form
@@ -161,7 +166,7 @@ class DeviceBlock extends Component {
                         onChange={this.onChange}
                         onChangeRemote={this.onChangeRemote}
                         schema={
-                            [{label: 'Неисправность', name: 'problem', type: 'string', variant: 'outlined'}]}
+                            [{label: 'Неисправность', name: 'problem', type: 'string', variant: 'outlined', required: true}]}
                         record={values}
                     />
                 </div>

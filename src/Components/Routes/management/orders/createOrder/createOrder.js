@@ -30,10 +30,10 @@ const DialogAppBar = ({classes, toggleCreate, createOrder}) => {
                 <IconButton edge="start" color="inherit" onClick={toggleCreate} aria-label="close">
                     <CloseIcon/>
                 </IconButton>
-                <Typography variant="h6" className={classes.title} >
+                <Typography variant="h6" className={classes.title}>
                     Создать Заказ
                 </Typography>
-                <Button autoFocus color="inherit" onClick={createOrder}>
+                <Button autoFocus color="inherit" type={'submit'} form={'form'}>
                     Сохранить
                 </Button>
             </Toolbar>
@@ -62,24 +62,27 @@ class CreateOrder extends Component {
             },
         }
     }
+
     setValues = (value, blockType) => {
         const {values} = this.state;
         let newValues = set(values, blockType, value);
         this.setState({values: newValues})
     };
-    shouldComponentUpdate(nextProps, nextState, nextContext){
+
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
         return this.state.values === nextState.values;
     }
 
-    createOrder = () => {
+    createOrder = (e) => {
+        e.preventDefault();
         const {values: {client, device, otherInformation}} = this.state;
-        const {enqueueSnackbar} = this.props;
+        const {enqueueSnackbar, toggleCreate} = this.props;
         const preparedData = prepareDataToCreate(client, device, otherInformation);
         console.log(preparedData);
         OrderService
             .create(preparedData)
-            .then(res => {
-                console.log(res)
+            .then(() => {
+                toggleCreate();
                 enqueueSnackbar("Заказ успешно создан", {variant: 'success'});
             })
             .catch(err => {
@@ -87,7 +90,6 @@ class CreateOrder extends Component {
                     getSafe(() => err.data.message, 'Произошла неизвестная ошибка!'),
                     {variant: 'error'});
             })
-        //TODO WAITING FOR READY BACKEND
     };
 
     render() {
@@ -104,9 +106,11 @@ class CreateOrder extends Component {
                 >
                     <DialogAppBar classes={classes} toggleCreate={toggleCreate} createOrder={this.createOrder}/>
                     <DialogContent>
-                        <ClientBlock setValues={this.setValues}/>
-                        <DeviceBlock setValues={this.setValues}/>
-                        <OtherInformationBlock setValues={this.setValues}/>
+                        <form onSubmit={this.createOrder} id={"form"}>
+                            <ClientBlock setValues={this.setValues}/>
+                            <DeviceBlock setValues={this.setValues}/>
+                            <OtherInformationBlock setValues={this.setValues}/>
+                        </form>
                     </DialogContent>
                 </Dialog>
             </div>
