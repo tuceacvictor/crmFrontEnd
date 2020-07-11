@@ -16,7 +16,7 @@ class Executors extends Component {
             user: {},
             formSchema: [
                 {name: 'name', label: "Имя", disabled: false, type: 'string', autoFocus: true},
-                {name: 'phone', label: "Номер телефона", disabled: false, type: 'number', autoFocus: false}
+                {name: 'phone', label: "Номер телефона", disabled: false, type: 'string', autoFocus: false}
             ]
         }
     }

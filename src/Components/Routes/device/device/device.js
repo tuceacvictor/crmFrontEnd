@@ -13,12 +13,10 @@ class Device extends Component {
             columns: [
                 {title: 'Серийный номер', field: 'serial'},
                 {title: 'Бренд', field: 'brand.name'},
-                {title: 'Модель', field: 'model.name'},
-                {title: 'пин', field: 'password'},
+                {title: 'Модель', field: 'model.name'}
             ],
             formSchema: [
                 {name: 'serial', label: "Серийный номер", disabled: false, type: 'string', autoFocus: true},
-                {name: 'name', label: "Название", disabled: false, type: 'string', autoFocus: false},
                 {
                     name: 'brandId',
                     label: "Бренд",
@@ -43,9 +41,6 @@ class Device extends Component {
                     autoFocus: false,
                     service: DeviceModelService
                 },
-                {name: 'password', label: "Пин", disabled: false, type: 'string', autoFocus: false},
-                {name: 'appearance', label: "Венешний Вид", disabled: false, type: 'string', autoFocus: false},
-                {name: 'equipment', label: "Комплектация", disabled: false, type: 'string', autoFocus: false},
             ],
             data: [],
             openAction: false,
