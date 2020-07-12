@@ -3,6 +3,7 @@ import AppHoc from '../../../../Services/HocHelpers/AppHoc';
 import withStyles from "@material-ui/core/styles/withStyles";
 import ToolBar from "./toolBar";
 import CreateOrder from "./createOrder";
+import TableOrder from "./table";
 
 const styles = () => ({
     wrapper: {
@@ -17,7 +18,7 @@ class Orders extends Component {
         this.state = {
             search: '',
             filter: {},
-            isOpenCreate: true,
+            isOpenCreate: false,
         };
     }
 
@@ -52,6 +53,9 @@ class Orders extends Component {
                     open={isOpenCreate}
                     toggleCreate={this.toggleCreateOrder}
                 />
+                <div style={{marginTop: 10}}>
+                    <TableOrder/>
+                </div>
             </div>
         );
     }

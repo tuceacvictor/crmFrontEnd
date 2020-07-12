@@ -73,7 +73,6 @@ class CrudDefault extends Component {
                                 })
                         })
                     }
-
                     onRowClick={(e, row) => this.onClickAction(row.id)}
                     actions={creatable && [
                         {
@@ -81,8 +80,32 @@ class CrudDefault extends Component {
                             tooltip: tooltipCreate,
                             isFreeAction: true,
                             onClick: () => this.onClickAction(),
+                        },
+                        {
+                            icon: 'refresh',
+                            tooltip: 'Обновить данные',
+                            isFreeAction: true,
+                            onClick: () => this.tableRef.current && this.tableRef.current.onQueryChange(),
                         }
                     ]}
+                    localization={{
+                        body: {
+                            emptyDataSourceMessage: "Записей нет",
+                        },
+                        pagination: {
+                            labelDisplayedRows: '{from}-{to} из {count}',
+                            labelRowsSelect: 'записей',
+                            labelRowsPerPage: 'Записей на странице:',
+                            firstAriaLabel: 'На первую страницу',
+                            firstTooltip: 'На первую страницу',
+                            previousAriaLabel: 'Предыдущая страница',
+                            previousTooltip: 'Предыдущая страница',
+                            nextAriaLabel: 'Следующая страница',
+                            nextTooltip: 'Следующая страница',
+                            lastAriaLabel: 'На последнюю страницу',
+                            lastTooltip: 'На последнюю страницу'
+                        }
+                    }}
                 />
                 {
                     openAction && (
