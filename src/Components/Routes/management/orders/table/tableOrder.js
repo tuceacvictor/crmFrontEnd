@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import MaterialTable from "material-table";
 import OrderService from "../../../../../Services/API/order.API";
+import ReadOrder from "../readOrder/readOrder";
 
-class TableOrder extends Component{
+class TableOrder extends Component {
     constructor(props) {
         super(props);
         this.tableRef = React.createRef();
@@ -11,25 +12,36 @@ class TableOrder extends Component{
                 {title: 'ID', field: 'id'},
                 {title: "Клиент", field: 'customer.phone'},
                 {title: "Устройство", field: 'device.serial'},
-                {title: "Статус", field: 'status',
-                    render: (rowData) => rowData.status === 'opened' && <span style={{color: 'green'}}>Открыт</span>}
-            ]
+                {
+                    title: "Статус", field: 'status',
+                    render: (rowData) =>
+                        rowData.status === 'opened' ? <span style={{color: 'green'}}>Открыт</span> :
+                            rowData.status === 'new' && <span style={{color: 'green'}}>Новый</span>
+                }
+            ],
+            isOpenRead: false,
+            recordId: null
         }
     }
 
+    onClickAction = (id) => {
+        this.setState({isOpenRead: true, recordId: id})
+    };
 
-
-
+    onCloseRead = () => {
+        this.setState({isOpenRead: false})
+    };
 
 
     render() {
-        const {columns} = this.state;
+        const {columns, isOpenRead, recordId} = this.state;
         return (
-            <div>
+            <div style={{width: '100%'}}>
                 <MaterialTable
                     tableRef={this.tableRef}
                     columns={columns}
                     title={"Заказы"}
+                    onRowClick={(e, row) => this.onClickAction(row.id)}
                     data={query =>
                         new Promise((resolve) => {
                             OrderService
@@ -43,14 +55,13 @@ class TableOrder extends Component{
                                 })
                                 .catch(() => {
                                     resolve({
-                                        data:[],
+                                        data: [],
                                         page: 0,
                                         totalCount: 0
                                     })
                                 })
                         })
                     }
-                    onRowClick={() => {}}
                     options={{
                         search: false
                     }}
@@ -81,6 +92,14 @@ class TableOrder extends Component{
                         }
                     ]}
                 />
+                {
+                    isOpenRead && (
+                        <ReadOrder
+                            isOpen={isOpenRead}
+                            recordId={recordId}
+                            onClose={this.onCloseRead}
+                        />
+                    )}
             </div>
         );
     }
