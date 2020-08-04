@@ -11,6 +11,11 @@ import withStyles from "@material-ui/core/styles/withStyles";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import getSafe from "../../../../../Helpers/getSafeValue";
 import OrderService from "../../../../../Services/API/order.API";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import {CardClient, CardDevice, CardOtherInfo} from "./cards";
+import {withSnackbar} from "notistack";
 
 const styles = (theme) => ({
     appBar: {
@@ -20,6 +25,10 @@ const styles = (theme) => ({
         marginLeft: theme.spacing(2),
         flex: 1,
     },
+    client_device_wrapper: {
+        display: 'flex',
+        width: '100%'
+    }
 });
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -77,6 +86,7 @@ class ReadOrder extends Component {
 
     render() {
         const {classes, isOpen, onClose} = this.props;
+        const {record} = this.state;
         return (
             <Dialog
                 open={isOpen}
@@ -88,7 +98,29 @@ class ReadOrder extends Component {
             >
                 <DialogAppBar classes={classes} onClose={onClose} createOrder={this.createOrder}/>
                 <DialogContent>
-                    content
+                    <div className={classes.client_device_wrapper}>
+                        <div style={{width: '50%'}}>
+                            <CardClient
+                                client={{...record.customer}}
+                            />
+                        </div>
+                        <div style={{width: '50%'}}>
+                            <CardDevice
+                                device={{
+                                    type: {},
+                                    brand: {},
+                                    model: {},
+                                    ...record.device,
+                                    password: record.password,
+                                    appearance: record.appearance,
+                                    equipment: record.equipment
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <CardOtherInfo
+                        otherInfo={record}
+                    />
                 </DialogContent>
             </Dialog>
         );
@@ -101,4 +133,6 @@ ReadOrder.propTypes = {
     recordId: PropTypes.number.isRequired,
 };
 
-export default withStyles(styles)(ReadOrder);
+export default withSnackbar(withStyles(styles)(ReadOrder));
+
+
