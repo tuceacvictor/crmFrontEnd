@@ -55,7 +55,7 @@ class Device extends Component {
                 columns={columns}
                 creatable={true}
                 service={DeviceService}
-                title={'Бренды Моделей'}
+                title={'База устройств'}
                 actionTitle={"Бренд"}
                 formSchema={formSchema}
             />

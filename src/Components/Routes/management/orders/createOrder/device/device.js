@@ -39,7 +39,7 @@ class DeviceBlock extends Component {
 
     onChangeRemote = (value) => {
         const {setValues} = this.props;
-        if(value !== null && !value.__isNew__){
+        if (value !== null && !value.__isNew__) {
             this.setState({
                 values: {
                     serial: {value: value.record.serial, label: value.record.serial},
@@ -50,9 +50,9 @@ class DeviceBlock extends Component {
                 },
                 isAutoComplete: true
             })
-        }else if(value && value.__isNew__){
+        } else if (value && value.__isNew__) {
             this.setState({values: {serial: {value: value.value, label: value.value}, __isNew: true,}})
-        }else{
+        } else {
             this.setState({
                 values: {
                     brand: '',
@@ -60,7 +60,9 @@ class DeviceBlock extends Component {
                     model: '',
                 },
                 isAutoComplete: false
-            }, () => {setValues(this.state.values, 'device')})
+            }, () => {
+                setValues(this.state.values, 'device')
+            })
         }
 
     };
@@ -68,14 +70,18 @@ class DeviceBlock extends Component {
         const {setValues} = this.props;
         const {values} = this.state;
         values[name] = value;
-        this.setState({values}, () => {setValues(this.state.values, 'device')})
+        this.setState({values}, () => {
+            setValues(this.state.values, 'device')
+        })
     };
     onChange = (event) => {
         const {setValues} = this.props;
         const {target: {name, value}} = event;
         const {values} = this.state;
         values[name] = value;
-        this.setState({values}, () => {setValues(this.state.values, 'device')})
+        this.setState({values}, () => {
+            setValues(this.state.values, 'device')
+        })
     };
 
     render() {
@@ -95,6 +101,21 @@ class DeviceBlock extends Component {
                         getValue={'phone'}
                         label={'Серийный номер / IMEI'}
                         onChange={this.onChangeRemote}
+                    />
+                    <Form
+                        onChange={this.onChange}
+                        onChangeRemote={this.onChangeRemoteSelect}
+                        schema={
+                            [{
+                                label: 'Тип Устройства',
+                                name: 'type',
+                                type: 'selectRemote',
+                                disabled: isAutoComplete,
+                                variant: 'outlined',
+                                service: DeviceTypeService,
+                                required: true
+                            }]}
+                        record={values}
                     />
                     <Form
                         onChange={this.onChange}
@@ -128,21 +149,6 @@ class DeviceBlock extends Component {
                     />
                     <Form
                         onChange={this.onChange}
-                        onChangeRemote={this.onChangeRemoteSelect}
-                        schema={
-                            [{
-                                label: 'Тип Устройства',
-                                name: 'type',
-                                type: 'selectRemote',
-                                disabled: isAutoComplete,
-                                variant: 'outlined',
-                                service: DeviceTypeService,
-                                required: true
-                            }]}
-                        record={values}
-                    />
-                    <Form
-                        onChange={this.onChange}
                         onChangeRemote={this.onChangeRemote}
                         schema={
                             [{label: 'Пароль', name: 'password', type: 'string', variant: 'outlined', required: true}]}
@@ -166,7 +172,13 @@ class DeviceBlock extends Component {
                         onChange={this.onChange}
                         onChangeRemote={this.onChangeRemote}
                         schema={
-                            [{label: 'Неисправность', name: 'problem', type: 'string', variant: 'outlined', required: true}]}
+                            [{
+                                label: 'Неисправность',
+                                name: 'problem',
+                                type: 'string',
+                                variant: 'outlined',
+                                required: true
+                            }]}
                         record={values}
                     />
                 </div>
