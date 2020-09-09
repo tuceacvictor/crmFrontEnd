@@ -16,6 +16,8 @@ import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
 import {CardClient, CardDevice, CardOtherInfo} from "./cards";
 import {withSnackbar} from "notistack";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
 
 const styles = (theme) => ({
     appBar: {
@@ -101,7 +103,7 @@ class ReadOrder extends Component {
                     <div className={classes.client_device_wrapper}>
                         <div style={{width: '50%'}}>
                             <CardClient
-                                client={{...record.customer}}
+                                client={{...record.customer, prepayment: record.prepayment}}
                             />
                         </div>
                         <div style={{width: '50%'}}>
@@ -113,7 +115,8 @@ class ReadOrder extends Component {
                                     ...record.device,
                                     password: record.password,
                                     appearance: record.appearance,
-                                    equipment: record.equipment
+                                    equipment: record.equipment,
+                                    problem: record.problem
                                 }}
                             />
                         </div>
@@ -122,6 +125,9 @@ class ReadOrder extends Component {
                         otherInfo={record}
                     />
                 </DialogContent>
+                <DialogActions>
+                    <Button color={"primary"} variant={"contained"} size={"small"}>Закрыть заказ</Button>
+                </DialogActions>
             </Dialog>
         );
     }

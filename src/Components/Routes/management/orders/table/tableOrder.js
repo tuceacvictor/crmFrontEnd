@@ -2,22 +2,28 @@ import React, {Component} from 'react'
 import MaterialTable from "material-table";
 import OrderService from "../../../../../Services/API/order.API";
 import ReadOrder from "../readOrder/readOrder";
-
+import moment from 'moment';
+import Divider from "@material-ui/core/Divider";
 class TableOrder extends Component {
     constructor(props) {
         super(props);
         this.tableRef = React.createRef();
+        const dateTimeFormat = 'DD-MM-YYYY';
         this.state = {
             columns: [
-                {title: 'ID', field: 'id'},
-                {title: "Клиент", field: 'customer.phone'},
+                {title: 'Номер заказа', field: 'id'},
+                {title: 'Дата приема', field: 'createdAt',
+                    render: (rowData) => moment(rowData.createdAt).format(dateTimeFormat)},
+                {title: "Клиент", field: 'customer.phone', render: (rowData) =>
+                        <span>{rowData.customer.name}<br/><Divider/>{rowData.customer.phone}</span>},
                 {title: "Устройство", field: 'device.serial'},
-                {
-                    title: "Статус", field: 'status',
+                {title: "Статус", field: 'status',
                     render: (rowData) =>
                         rowData.status === 'opened' ? <span style={{color: 'green'}}>Открыт</span> :
                             rowData.status === 'new' && <span style={{color: 'green'}}>Новый</span>
-                }
+                },
+                {title: "Неисправность", field: 'problem'},
+                {title: "Стоимость", field: 'prepayment'},
             ],
             isOpenRead: false,
             recordId: null
@@ -36,8 +42,9 @@ class TableOrder extends Component {
     render() {
         const {columns, isOpenRead, recordId} = this.state;
         return (
-            <div style={{width: '100%'}}>
+            <div style={{width: '100%', height: '100%'}}>
                 <MaterialTable
+                    style={{height: '100%'}}
                     tableRef={this.tableRef}
                     columns={columns}
                     title={"Заказы"}
