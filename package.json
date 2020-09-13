@@ -26,7 +26,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-select": "^3.1.0",
-    "react-select-async-paginate": "^0.3.14"
+    "react-select-async-paginate": "^0.3.14",
+    "recharts": "^1.8.5"
   },
   "scripts": {
     "start": "react-scripts start",
